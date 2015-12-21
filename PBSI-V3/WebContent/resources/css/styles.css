@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";
+
+.bg_img {
+	background-image: url("images/fond.jpeg") !important;
+}
+
+.bottom {
+	position: absolute;
+	top: 910px;
+}
+
+.form-field {
+	padding: 5px;
+}

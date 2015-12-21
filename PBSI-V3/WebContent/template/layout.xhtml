@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<h:outputStylesheet name="css/jquery-ui.css" />
+	<h:outputStylesheet name="css/jquery-ui.structure.css" />
+	<h:outputStylesheet name="css/jquery-ui.theme.css" />
+<!-- 	<h:outputStylesheet name="css/bootstrap.css" /> -->
+<!-- 	<h:outputStylesheet name="css/bootstrap-theme.css" /> -->
+	<h:outputStylesheet name="css/styles.css" />
+</h:head> 
+
+<h:body class="bg_img"> 
+	<div id="page">
+		<div id="header" class="ui-grid ui-grid-responsive">
+			<ui:insert name="header">
+				<ui:include src="/template/header.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="content" class="ui-grid ui-grid-responsive">
+			<ui:insert name="content">
+				<ui:include src="/template/content.xhtml" />
+			</ui:insert>
+		</div>
+<!-- 		<div id="footer"> -->
+<!-- 			<ui:insert name="footer"> -->
+<!-- 				<ui:include src="/template/footer.xhtml" /> -->
+<!-- 			</ui:insert> -->
+<!-- 		</div> -->
+	</div>
+</h:body> 
+</html>
