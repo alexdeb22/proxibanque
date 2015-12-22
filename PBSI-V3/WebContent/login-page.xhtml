@@ -4,38 +4,36 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head></h:head>
 <body>
 	<f:view>
 		<ui:composition template="template/layout.xhtml">
 			<ui:define name="content">
-
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-4"></div>
-							<div class="ui-grid-col-4">
-								<h:form>
-									<p:panel id="authentification" header="Authentification">
-										<p:messages id="messages" />
-
-										<h:panelGrid columns="2" cellpadding="10">
-											<p:outputLabel for="login" value="Identifiant:"
-												class="form-field" />
-											<p:inputText id="login" required="true" class="form-field" value="#{conseiller.login}"/>
-											<p:outputLabel for="password" value="Mot de passe:"
-												class="form-field" />
-											<p:password id="password" required="true" class="form-field" value="#{conseiller.mdp}" />
-										</h:panelGrid>
-										<p:commandButton value="Submit" id="ajax" styleClass="ui-priority-primary" />
-
-
-									</p:panel>
-								</h:form>
-							</div>
-							<div class="ui-grid-col-4"></div>
-						</div>
-
-
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-4">
+						<h:form id="login-form">
+							<p:panel id="authentification" header="Authentification">
+								<p:message id="message-login" showDetail="true"
+									autoUpdate="true" for="login-form" />
+								<h:panelGrid columns="2" cellpadding="10">
+									<p:outputLabel for="login" value="Identifiant:"
+										class="form-field" />
+									<p:inputText id="login" required="true" class="form-field"
+										value="#{conseiller.login}" />
+									<p:outputLabel for="password" value="Mot de passe:"
+										class="form-field" />
+									<p:password id="password" required="true" class="form-field"
+										value="#{conseiller.mdp}" />
+								</h:panelGrid>
+								<p:commandButton value="Submit" id="ajax"
+									styleClass="ui-priority-primary"
+									action="#{conseiller.validerLogin()}" />
+							</p:panel>
+						</h:form>
+					</div>
+					<div class="ui-grid-col-4"></div>
+				</div>
 			</ui:define>
 		</ui:composition>
 	</f:view>
