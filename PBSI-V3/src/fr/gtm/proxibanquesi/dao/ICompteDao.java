@@ -2,9 +2,12 @@ package fr.gtm.proxibanquesi.dao;
 
 import java.util.ArrayList;
 
+import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.CompteCourant;
 import fr.gtm.proxibanquesi.domaine.CompteEpargne;
+import fr.gtm.proxibanquesi.domaine.Conseiller;
+import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
 /**
@@ -23,7 +26,7 @@ public interface ICompteDao {
 	 *            : le client
 	 * @return
 	 */
-	public int createEpargne(CompteEpargne comt);
+	public CompteEpargne createEpargne(CompteEpargne comt);
 
 	/**
 	 * Méthode de création un compte Courant.
@@ -32,27 +35,27 @@ public interface ICompteDao {
 	 *            : le client
 	 * @return
 	 */
-	public int createCourant(CompteCourant comt);
+	public CompteCourant createCourant(CompteCourant comt);
 
 	/**
-	 * Méthode pour lire les informations d'un compte.
+	 * Méthode pour lire les informations d'un compte courant.
 	 * 
 	 * @param comt
-	 *            : le client
+	 *            : le compte
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public Compte read(Compte comt) throws LigneInexistanteException;
-
+	public CompteCourant readCourant(CompteCourant comt) throws LigneInexistanteException;
+	
 	/**
-	 * Méthode pour modifier les informations d'un compte.
+	 * Méthode pour lire les informations d'un compte epargne.
 	 * 
 	 * @param comt
-	 *            : le client
+	 *            : le compte
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public int updateCourant(CompteCourant comt) throws LigneInexistanteException;
+	public CompteEpargne readEpargne(CompteEpargne comt) throws LigneInexistanteException;
 
 	/**
 	 * Méthode pour supprimer un compte.
@@ -84,9 +87,30 @@ public interface ICompteDao {
 	 */
 	public ArrayList<Integer> getListeComptesEpargne(int id);
 	
-	public boolean debiter(int numcompte, Double montant);
+	/**
+	 * Méthode de modification d'un compte Courant.
+	 * @param compte : compte
+	 * @return
+	 * @throws LigneInexistanteException
+	 */
+	public int updateCourant(CompteCourant compte) throws LigneInexistanteException;
 	
-	public boolean crediter(int numcompte, Double montant);
+	/**
+	 * Méthode de modification d'un compte Epargne.
+	 * @param compte
+	 * @return
+	 * @throws LigneInexistanteException
+	 */
+	public int updateEpargne(CompteEpargne compte) throws LigneInexistanteException;
+	
+	/**
+	 * Méthode pour déterminer le type d'un compte soit Courant soit Epargne.
+	 * @param id : l'identifiant du client
+	 * @return
+	 * @throws LigneInexistanteException
+	 */
+	public String typeCompte(int id) throws LigneInexistanteException;
+	
 
 	
 

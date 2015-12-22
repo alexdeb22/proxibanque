@@ -1,33 +1,30 @@
 package fr.gtm.proxibanquesi.domaine;
 
 /**
- * Classe représentant un compte courant, avec autorisation de découvert.
+ * Classe représentant un compte courant, avec autorisation de découvert déclarer de 1000 euro.
  * @author Martin Coralie - De Bruyn Alexandre
  */
 public class CompteCourant extends Compte {
 
 	// Propriétés
-	private int autorisationDecouvert = 1000;
+	private double autorisationDecouvert = 1000;
 	
 	// Constructeurs
 	public CompteCourant() {
 		super();
 	}
-	public CompteCourant(int numCompte) {
-		super();
-		setNumCompte(numCompte);
-	}
-	public CompteCourant(double solde, int numCompte) {
+	public CompteCourant(double solde) {
 		super();
 		setSolde(solde);
 	}
+	
 
 	// Getters & Setters
-	public int getAutorisationDecouvert() {
+	public double getAutorisationDecouvert() {
 		return autorisationDecouvert;
 	}
-	public void setAutorisationDecouvert(int autorisationDecouvert) {
-		this.autorisationDecouvert = autorisationDecouvert;
+	public void setAutorisationDecouvert(double d) {
+		this.autorisationDecouvert = d;
 	}
 
 	// Méthodes

@@ -1,7 +1,7 @@
 package fr.gtm.proxibanquesi.domaine;
 
 /**
- * Classe représentant un compte épargne.
+ * Classe représentant un compte épargne, avec un taux de rémuneration déclarer à 3%.
  * @author Martin Coralie - De Bruyn Alexandre
  */
 public class CompteEpargne extends Compte {
