@@ -6,38 +6,49 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
+import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
+import fr.gtm.proxibanquesi.service.IConseillerService;
 
-@ManagedBean(name="conseiller")
+@ManagedBean(name = "conseiller")
+@SessionScoped
 public class ConseillerBean {
-	
+
+	@Inject
+	IConseillerService serv;
+
 	private String login;
 	private String mdp;
 	private String nom;
 	private String prenom;
 	private int idcons;
-	private ArrayList<Client> listeClients;
-	
+	private ArrayList<Client> listeClients = new ArrayList<Client>();
+
 	public ConseillerBean() {
 		super();
 	}
-	
+
 	public String getLogin() {
 		return login;
 	}
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
+
 	public String getMdp() {
 		return mdp;
 	}
+
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
-	
+
 	public String getNom() {
 		return nom;
 	}
@@ -74,7 +85,7 @@ public class ConseillerBean {
 	public void creationBean() {
 		System.out.println("Creation du bean");
 	}
-	
+
 	@PreDestroy
 	public void finBean() {
 		System.out.println("Fin du bean: " + this.toString());
@@ -84,19 +95,47 @@ public class ConseillerBean {
 	public String toString() {
 		return "ConseillerBean [login=" + login + ", mdp=" + mdp + "]";
 	}
-	
+
+	/**
+	 * Valdiation du login mdp.
+	 * @return
+	 */
 	public String validerLogin() {
+		// Revoir cycle de vie, normalement inutile
+		if(null == login | null == mdp) {
+			return null;
+		}
+		// Cfreation de l'objet conseiller
 		Conseiller cons = new Conseiller();
 		cons.setLogin(login);
 		cons.setMdp(mdp);
+		try {
 
-		// TODO: verifier l'existence en base
-		// Si invalide retourner page existante et message d'erreur (FacesMessage)
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Message");
-		System.out.println(message);
-		FacesContext.getCurrentInstance().addMessage("login-form", message);
-		return "login-page.xhtml";
-		// Sinon mettre à jour le Managed Bean avec les infos Conseiller
+			// Si valide mettre à jour le Managed Bean avec les infos Conseiller
+			cons = serv.checkUser(cons);
+			nom = cons.getNom();
+			prenom = cons.getPrenom();
+			idcons = cons.getIdcons();
+		} catch (LigneInexistanteException e) {
+			// Si invalide retourner page existante et message d'erreur
+			// (FacesMessage)
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Mot de passe invalides",
+					"Veuillez réessayer");
+			FacesContext.getCurrentInstance().addMessage("login-form", message);
+			return null;
+		}
+		
+		try {
+			// Récupérer la liste des clients
+			listeClients = serv.getListeClients(cons);
+			return "user-page";
+		} catch (LigneInexistanteException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Problème de récupération de la liste clients", "");
+			System.out.println(message.toString());
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			return "user-page";
+		}
+
 	}
 
 }

@@ -37,37 +37,38 @@
 		</div>
 
 		<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-    <div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="user-page.jsp">Home</a></li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Opération courante <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="GClientNew.jsp">creation client</a></li>
-            <li><a href="GClientModif.jsp">information client</a></li>
-            <li><a href="GCompte.jsp">creation compte</a></li>
-            <li><a href="virement.jsp">virement</a></li>
-          </ul>
-        </li>
-        <li class="dropdown"><a href="pasMethode.jsp">Placement </a>
-        </li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Crédit<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="pasMethode.jsp">consommation</a></li>
-            <li><a href="pasMethode.jsp">immobilier</a></li>
-          </ul>
-        <li class="dropdown"><a href="pasMethode.jsp">Audit <span ></span></a>
-        </li>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-		
-		<div class=row>
-			<div class="col-sm-8">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<div>
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="user-page.jsp">Home</a></li>
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown" href="#">Opération courante <span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="GClientNew.jsp">creation client</a></li>
+									<li><a href="GClientModif.jsp">information client</a></li>
+									<li><a href="GCompte.jsp">creation compte</a></li>
+									<li><a href="virement.jsp">virement</a></li>
+								</ul></li>
+							<li class="dropdown"><a href="pasMethode.jsp">Placement
+							</a></li>
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown" href="#">Crédit<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="pasMethode.jsp">consommation</a></li>
+									<li><a href="pasMethode.jsp">immobilier</a></li>
+								</ul>
+							<li class="dropdown"><a href="pasMethode.jsp">Audit <span></span></a>
+							</li>
+							</li>
+						</ul>
+					</div>
 				</div>
+		</nav>
+
+		<div class=row>
+			<div class="col-sm-8"></div>
 			<div class="col-sm-4 maClasse">
 				<table class="table table-bordered">
 					<caption class="text-center">Liste des clients</caption>
