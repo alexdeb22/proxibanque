@@ -13,6 +13,7 @@ import fr.gtm.proxibanquesi.dao.util.BddConnector;
 import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.CompteCourant;
 import fr.gtm.proxibanquesi.domaine.CompteEpargne;
+import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
 /**
@@ -24,103 +25,49 @@ import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
  */
 public class CompteDao implements ICompteDao {
 
+
+
 	@Override
-	public CompteEpargne createEpargne(CompteEpargne comt) {
+	public Compte createCompte(Compte comt) {
 		try {
 			Connection cnx = BddConnector.connect();
 
 			// Statement preparation
 			String sql = "insert into compte(numCompte, solde, dateOuverture, idclient, type, autodecouvert, taux)"
-					+ " values " + "( seq_numcompte.nextval, ? , sysdate , ?, 'Epargne', 0, ?)";
+					+ " values " + "( seq_numcompte.nextval, ? , sysdate , ?, ?, ?, ?)";
 			PreparedStatement stat;
 			stat = cnx.prepareStatement(sql);
 			stat.setDouble(1, comt.getSolde());
 			stat.setInt(2, comt.getIdcli());
-			stat.setDouble(3, comt.getTauxRemuneration());
-			// Statement execution
-			stat.executeUpdate();
-			// Recupere le numéro de compte assigné
-			String sql2 = "select seq_numcompte.currval from dual";
-			Statement numstat = cnx.createStatement(); 
-			ResultSet num = numstat.executeQuery(sql2);
-			num.next();
-			comt.setNumCompte(num.getInt(1));
-			
-
-			BddConnector.unconnect(cnx);
-		} catch (SQLException ex) {
-			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return comt;
-	}
-
-	@Override
-	public CompteCourant createCourant(CompteCourant comt) {
-		try {
-			Connection cnx = BddConnector.connect();
-
-			// Statement preparation
-			String sql = "insert into compte(numCompte, solde, dateOuverture, idclient, type, autodecouvert, taux)"
-					+ " values " + "( seq_numcompte.nextval, ? , sysdate , ?, 'Courant', ?, 0)";
-			PreparedStatement stat;
-			stat = cnx.prepareStatement(sql);
-			stat.setDouble(1, comt.getSolde());
-			stat.setInt(2, comt.getIdcli());
-			stat.setDouble(3, comt.getAutorisationDecouvert());
-			// Statement execution
-			stat.executeUpdate();
-			// Recupere le numéro de compte assigné
-			String sql2 = "select seq_numcompte.currval from dual";
-			Statement numstat = cnx.createStatement(); 
-			ResultSet num = numstat.executeQuery(sql2);
-			num.next();
-			comt.setNumCompte(num.getInt(1));
-
-			BddConnector.unconnect(cnx);
-		} catch (SQLException ex) {
-			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return comt;
-	}
-
-	@Override
-	public CompteCourant readCourant(CompteCourant comt) throws LigneInexistanteException {
-		try {
-			Connection cnx = BddConnector.connect();
-			String check = "select count(*) from Compte where numCompte = ?";
-			PreparedStatement checkstat = cnx.prepareStatement(check);
-			checkstat.setInt(1, comt.getNumCompte());
-			ResultSet checkres = checkstat.executeQuery();
-			checkres.next();
-			if (checkres.getInt(1) == 0) {
-				BddConnector.unconnect(cnx);
-				throw new LigneInexistanteException("Ce compte n'existe pas dans la base.");
+			if (comt instanceof CompteCourant) {
+				stat.setString(3, "Courant");	
+				stat.setDouble(4, ((CompteCourant) comt).getAutorisationDecouvert());
+				stat.setDouble(5, 0);
+			} else if (comt instanceof CompteEpargne) {
+				stat.setString(3, "Epargne");	
+				stat.setDouble(4, 0);
+				stat.setDouble(5, ((CompteEpargne) comt).getTauxRemuneration());
 			}
-			// Statement preparation
-			String sql = "select * from compte where numCompte=?";
-			java.sql.PreparedStatement stat;
-			stat = cnx.prepareStatement(sql);
-			stat.setInt(1, comt.getNumCompte());
 			// Statement execution
-			ResultSet res = stat.executeQuery();
-			res.next();
-			comt.setSolde(res.getDouble(3));
-			comt.setAutorisationDecouvert(res.getDouble(5));
-			comt.setDateOuverture(res.getDate(7));
-			comt.setIdcli(res.getInt(6));
+			stat.executeUpdate();
+			// Recupere le numéro de compte assigné
+			String sql2 = "select seq_numcompte.currval from dual";
+			Statement numstat = cnx.createStatement(); 
+			ResultSet num = numstat.executeQuery(sql2);
+			num.next();
+			comt.setNumCompte(num.getInt(1));
 
 			BddConnector.unconnect(cnx);
-
 		} catch (SQLException ex) {
 			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
 		return comt;
 	}
 	
+
 	@Override
-	public CompteEpargne readEpargne(CompteEpargne comt) throws LigneInexistanteException {
+	public Compte readCompte(Compte comt) throws LigneInexistanteException {
 		// TODO Auto-generated method stub
 		try {
 			Connection cnx = BddConnector.connect();
@@ -142,7 +89,11 @@ public class CompteDao implements ICompteDao {
 			ResultSet res = stat.executeQuery();
 			res.next();
 			comt.setSolde(res.getDouble(3));
-			comt.setTauxRemuneration(res.getDouble(4));
+			if (comt instanceof CompteCourant) {
+				((CompteCourant) comt).setAutorisationDecouvert(res.getDouble(5));
+			} else if (comt instanceof CompteEpargne) {
+				((CompteEpargne) comt).setTauxRemuneration(res.getDouble(4));
+			}
 			comt.setDateOuverture(res.getDate(7));
 			comt.setIdcli(res.getInt(6));
 
@@ -153,7 +104,7 @@ public class CompteDao implements ICompteDao {
 		}
 		return comt;
 	}
-
+	
 	@Override
 	public int delete(Compte comt) throws LigneInexistanteException {
 		int res = 0;
@@ -185,17 +136,29 @@ public class CompteDao implements ICompteDao {
 	}
 
 	@Override
-	public ArrayList<Integer> getListeComptesCourant(int id) {
-		ArrayList<Integer> listeComptes = new ArrayList<Integer>();
+	public ArrayList<Compte> getListeComptes(Conseiller cons) {
+		ArrayList<Compte> listeComptes = new ArrayList<Compte>();
 		try {
 			Connection cnx = BddConnector.connect();
 
-			String sql = "select numcompte from Compte where idclient = ? and type='Courant'";
+			String sql = "select numCompte, solde, dateOuverture, idclient, type, autodecouvert, taux from Compte JOIN Client USING (idclient) WHERE idcons = ?";
 			PreparedStatement stat = cnx.prepareStatement(sql);
-			stat.setInt(1, id);
+			stat.setInt(1, cons.getIdcons());
 			ResultSet res = stat.executeQuery();
+			Compte compTemp = null;
 			while (res.next()) {
-				listeComptes.add(res.getInt(1));
+				if (res.getString("type").equals("Courant")) {
+					compTemp = new CompteCourant();
+					((CompteCourant) compTemp).setAutorisationDecouvert(res.getDouble("autodecouvert"));
+				} else if (res.getString("type").equals("Epargne")) {
+					compTemp = new CompteEpargne();
+					((CompteEpargne) compTemp).setTauxRemuneration(res.getDouble("taux"));
+				}
+				compTemp.setIdcli(res.getInt("idclient"));
+				compTemp.setNumCompte(res.getInt("numCompte"));
+				compTemp.setSolde(res.getDouble("solde"));
+				compTemp.setDateOuverture(res.getDate("dateOuverture"));
+				listeComptes.add(compTemp);
 			}
 
 		} catch (SQLException ex) {
@@ -204,61 +167,10 @@ public class CompteDao implements ICompteDao {
 		return listeComptes;
 	}
 
-	@Override
-	public ArrayList<Integer> getListeComptesEpargne(int id) {
-		ArrayList<Integer> listeComptes = new ArrayList<Integer>();
-		try {
-			Connection cnx = BddConnector.connect();
 
-			String sql = "select numcompte from Compte where idclient = ? and type='Epargne'";
-			PreparedStatement stat = cnx.prepareStatement(sql);
-			stat.setInt(1, id);
-			ResultSet res = stat.executeQuery();
-			while (res.next()) {
-				listeComptes.add(res.getInt(1));
-			}
-
-		} catch (SQLException ex) {
-			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return listeComptes;
-	}
-
-	@Override
-	public int updateCourant(CompteCourant comt) throws LigneInexistanteException {
-		int res = 0;
-		try {
-			Connection cnx = BddConnector.connect();
-			String check = "select count(*) from Compte where numCompte = ?";
-			PreparedStatement checkstat = cnx.prepareStatement(check);
-			checkstat.setInt(1, comt.getNumCompte());
-			ResultSet checkres = checkstat.executeQuery();
-			checkres.next();
-			if (checkres.getInt(1) == 0) {
-				BddConnector.unconnect(cnx);
-				throw new LigneInexistanteException("Ce compte n'existe pas dans la base.");
-			}
-			// Statement preparation
-			String sql = "update compte set solde=?, autodecouvert=? where numcompte=?";
-			java.sql.PreparedStatement stat;
-			stat = cnx.prepareStatement(sql);
-			stat.setDouble(1, comt.getSolde());
-			stat.setDouble(2, comt.getAutorisationDecouvert());
-			stat.setInt(3, comt.getNumCompte());
-			// Statement execution
-			res = stat.executeUpdate();
-
-			BddConnector.unconnect(cnx);
-		} catch (SQLException ex) {
-			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return res;
-	}
 	
 	@Override
-	public int updateEpargne(CompteEpargne comt) throws LigneInexistanteException {
-		int res = 0;
+	public Compte updateCompte(Compte comt) throws LigneInexistanteException {
 		try {
 			Connection cnx = BddConnector.connect();
 			String check = "select count(*) from Compte where numCompte = ?";
@@ -271,54 +183,31 @@ public class CompteDao implements ICompteDao {
 				throw new LigneInexistanteException("Ce compte n'existe pas dans la base.");
 			}
 			// Statement preparation
-			String sql = "update compte set solde=?, taux=? where numcompte=?";
+			String sql = "update compte set solde=?, autodecouvert=?, taux=? where numcompte=?";
 			java.sql.PreparedStatement stat;
 			stat = cnx.prepareStatement(sql);
 			stat.setDouble(1, comt.getSolde());
-			stat.setDouble(2, comt.getTauxRemuneration());
-			stat.setInt(3, comt.getNumCompte());
-			// Statement execution
-			res = stat.executeUpdate();
-
-			BddConnector.unconnect(cnx);
-		} catch (SQLException ex) {
-			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return res;
-	}
-
-	@Override
-	public String typeCompte(int id) throws LigneInexistanteException {
-		String type = "";
-		try {
-			Connection cnx = BddConnector.connect();
-			String check = "select count(*) from Compte where numCompte = ?";
-			PreparedStatement checkstat = cnx.prepareStatement(check);
-			checkstat.setInt(1, id);
-			ResultSet checkres = checkstat.executeQuery();
-			checkres.next();
-			if (checkres.getInt(1) == 0) {
-				BddConnector.unconnect(cnx);
-				throw new LigneInexistanteException("Ce compte n'existe pas dans la base.");
+			if (comt instanceof CompteCourant) {
+				stat.setDouble(2, ((CompteCourant) comt).getAutorisationDecouvert());
+				stat.setDouble(3, 0);
+			} else if (comt instanceof CompteEpargne) {
+				stat.setDouble(2, 0);
+				stat.setDouble(3, ((CompteEpargne) comt).getTauxRemuneration());
 			}
-			// Statement preparation
-			String sql = "select type from compte where numCompte=?";
-			java.sql.PreparedStatement stat;
-			stat = cnx.prepareStatement(sql);
-			stat.setInt(1, id);
+			
+			stat.setInt(4, comt.getNumCompte());
 			// Statement execution
-			ResultSet res = stat.executeQuery();
-			res.next();
-			type = res.getString(1);
+			stat.executeUpdate();
 
 			BddConnector.unconnect(cnx);
-
 		} catch (SQLException ex) {
 			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return type;
+
+		return comt;
 	}
+
+
 
 
 

@@ -1,5 +1,8 @@
 package fr.gtm.proxibanquesi.dao;
 
+import java.util.ArrayList;
+
+import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
@@ -54,6 +57,8 @@ public interface IConseillerDao {
 	public Conseiller getID(Conseiller cons) throws LigneInexistanteException;
 	
 	public Conseiller getUser(Conseiller userTemp) throws LigneInexistanteException;
+
+	public ArrayList<Client> getListeClients(Conseiller cons);
 
 
 	

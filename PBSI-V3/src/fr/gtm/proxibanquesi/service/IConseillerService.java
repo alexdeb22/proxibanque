@@ -13,8 +13,6 @@ public interface IConseillerService {
 
 	public Conseiller checkUser(Conseiller userTemp) throws LigneInexistanteException;
 	
-//	public Conseiller getListeClients(Conseiller cons);
-	
-	public ArrayList<Client> getListeClients(Conseiller cons) throws LigneInexistanteException;
+	public ArrayList<Client> getListeClients(Conseiller cons);
 
 }

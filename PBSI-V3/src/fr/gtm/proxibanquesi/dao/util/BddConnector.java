@@ -20,9 +20,9 @@ public final class BddConnector {
 	/** URL of oracle database. */
 	private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	/** Login of the database user. */
-	private static String login = "proxibanque";
+	private static String login = "PROXIBANQUE";
 	/** Password of the database user. */
-	private static String password = "proxipass";
+	private static String password = "PROXIPASS";
 
 	// Methods
 	 /** Create a connection to the database.

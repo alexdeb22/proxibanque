@@ -26,23 +26,10 @@ public class ClientService implements IClientService {
 
 	@Override
 	public Client createClient(Client cli) throws LigneExistanteException, LigneInexistanteException {
-		dao.create(cli);
-		cli = dao.getID(cli);
-		return cli;
+		return dao.create(cli);
 	}
 
-	@Override
-	public Client getListeComptesCourant(Client cli) {
 
-		cli.setListeComptesCourant(daoco.getListeComptesCourant(cli.getId()));
-		return cli;
-	}
-
-	@Override
-	public Client getListeComptesEpargne(Client cli) {
-		cli.setListeComptesEpargne(daoco.getListeComptesEpargne(cli.getId()));
-		return cli;
-	}
 	
 	@Override
 	public ArrayList<CompteCourant> getComptesCourant(Client cli) throws LigneInexistanteException {
@@ -81,10 +68,8 @@ public class ClientService implements IClientService {
 	}
 
 	@Override
-	public int modifierClient(Client cli) throws LigneInexistanteException {
-		int res = 0;
-		res = dao.update(cli);
-		return res;
+	public Client modifierClient(Client cli) throws LigneInexistanteException {
+		return dao.update(cli);
 	}
 
 	@Override

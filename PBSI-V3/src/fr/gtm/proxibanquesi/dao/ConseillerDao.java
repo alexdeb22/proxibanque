@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.gtm.proxibanquesi.dao.util.BddConnector;
+import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
@@ -180,5 +182,34 @@ public class ConseillerDao implements IConseillerDao {
 		return cons;
 	}
 
+	
+	@Override
+	public ArrayList<Client> getListeClients(Conseiller cons) {
+		ArrayList<Client> listeClients = new ArrayList<Client>();
+		try {
+			Connection cnx = BddConnector.connect();
+
+			String sql = "select * from Client where idcons = ?";
+			PreparedStatement stat = cnx.prepareStatement(sql);
+			stat.setInt(1, cons.getIdcons());
+			ResultSet res = stat.executeQuery();
+			while(res.next()) {
+				Client cTemp = new Client();
+				cTemp.setId(res.getInt("idclient"));
+				cTemp.setNom(res.getString("nom"));
+				cTemp.setPrenom(res.getString("prenom"));
+				cTemp.setAdresse(res.getString("adresse"));
+				cTemp.setCodePostal(res.getString("codepostal"));
+				cTemp.setVille(res.getString("ville"));
+				cTemp.setTelephone(res.getString("telephone"));
+				cTemp.setCons(cons.getIdcons());
+				listeClients.add(cTemp);
+			}
+
+		} catch (SQLException ex) {
+			Logger.getLogger(ClientDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return listeClients;
+	}
 
 }

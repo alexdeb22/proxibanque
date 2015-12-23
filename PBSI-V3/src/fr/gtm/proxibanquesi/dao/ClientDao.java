@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.gtm.proxibanquesi.dao.util.BddConnector;
 import fr.gtm.proxibanquesi.domaine.Client;
+import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
@@ -22,8 +24,7 @@ public class ClientDao implements IClientDao {
 
 	@Override
 
-	public int create(Client cli) throws LigneExistanteException {
-		int res = 0;
+	public Client create(Client cli) throws LigneExistanteException {
 		try {
 			Connection cnx = BddConnector.connect();
 
@@ -51,14 +52,20 @@ public class ClientDao implements IClientDao {
 			stat.setString(6, cli.getTelephone());
 			stat.setInt(7, cli.getCons());
 			// Statement execution
-			res = stat.executeUpdate();
+			stat.executeUpdate();
 
+			// Recupere l'id client assigné
+			String sql2 = "select seq_idclient.currval from dual";
+			Statement idstat = cnx.createStatement(); 
+			ResultSet id = idstat.executeQuery(sql2);
+			id.next();
+			cli.setId(id.getInt(1));
 			BddConnector.unconnect(cnx);
 		} catch (SQLException ex) {
 			Logger.getLogger(ClientDao.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		return res;
+		return cli;
 	}
 
 	@Override
@@ -99,8 +106,7 @@ public class ClientDao implements IClientDao {
 	}
 
 	@Override
-	public int update(Client cli) throws LigneInexistanteException {
-		int res = 0;
+	public Client update(Client cli) throws LigneInexistanteException {
 		try {
 			Connection cnx = BddConnector.connect();
 			String check = "select count(*) from Client where idclient = ?";
@@ -126,39 +132,9 @@ public class ClientDao implements IClientDao {
 			stat.setInt(7, cli.getCons());
 			stat.setInt(8, cli.getId());
 			// Statement execution
-			res = stat.executeUpdate();
+			stat.executeUpdate();
 
 			BddConnector.unconnect(cnx);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(ClientDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return res;
-	}
-
-	@Override
-	public int delete(Client cli) throws LigneInexistanteException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Client getID(Client cli) throws LigneInexistanteException {
-		try {
-			Connection cnx = BddConnector.connect();
-
-			String sql = "select * from Client where nom = ?" + " and prenom = ? and adresse = ?";
-			PreparedStatement stat = cnx.prepareStatement(sql);
-			stat.setString(1, cli.getNom().toUpperCase());
-			stat.setString(2, cli.getPrenom().toUpperCase());
-			stat.setString(3, cli.getAdresse().toUpperCase());
-			ResultSet res = stat.executeQuery();
-			res.next();
-			if (res.getInt(1) == 0) {
-				BddConnector.unconnect(cnx);
-				throw new LigneInexistanteException("Ce client n'existe pas dans la base.");
-			}
-			cli.setId(res.getInt(1));
 
 		} catch (SQLException ex) {
 			Logger.getLogger(ClientDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -167,23 +143,11 @@ public class ClientDao implements IClientDao {
 	}
 
 	@Override
-	public ArrayList<Integer> getListeClients(int idcons) {
-		ArrayList<Integer> listeClients = new ArrayList<Integer>();
-		try {
-			Connection cnx = BddConnector.connect();
-
-			String sql = "select idclient from Client where idcons = ?";
-			PreparedStatement stat = cnx.prepareStatement(sql);
-			stat.setInt(1, idcons);
-			ResultSet res = stat.executeQuery();
-			while(res.next()) {
-				listeClients.add(res.getInt(1));
-			}
-
-		} catch (SQLException ex) {
-			Logger.getLogger(ClientDao.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return listeClients;
+	public int delete(Client cli) throws LigneInexistanteException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+
 
 }

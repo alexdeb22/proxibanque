@@ -20,42 +20,27 @@ import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 public interface ICompteDao {
 
 	/**
-	 * Méthode de création un compte Epargne.
+	 * Méthode de création d'un compte.
 	 * 
 	 * @param comt
 	 *            : le client
 	 * @return
 	 */
-	public CompteEpargne createEpargne(CompteEpargne comt);
-
-	/**
-	 * Méthode de création un compte Courant.
-	 * 
-	 * @param comt
-	 *            : le client
-	 * @return
-	 */
-	public CompteCourant createCourant(CompteCourant comt);
-
-	/**
-	 * Méthode pour lire les informations d'un compte courant.
-	 * 
-	 * @param comt
-	 *            : le compte
-	 * @return
-	 * @throws LigneInexistanteException
-	 */
-	public CompteCourant readCourant(CompteCourant comt) throws LigneInexistanteException;
+	public Compte createCompte(Compte comt);
 	
+
+
 	/**
-	 * Méthode pour lire les informations d'un compte epargne.
+	 * Méthode pour lire les informations d'un compte.
 	 * 
 	 * @param comt
 	 *            : le compte
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public CompteEpargne readEpargne(CompteEpargne comt) throws LigneInexistanteException;
+	public Compte readCompte(Compte comt) throws LigneInexistanteException;
+	
+
 
 	/**
 	 * Méthode pour supprimer un compte.
@@ -68,48 +53,42 @@ public interface ICompteDao {
 	public int delete(Compte comt) throws LigneInexistanteException;
 
 	/**
-	 * Méthode qui récupère la liste des numéros de compte courant d'un client à partir
-	 * de son identifiant.
+	 * Méthode qui récupère la liste des comptes des clients d'un conseiller.
 	 * 
-	 * @param id
-	 *            L'identifiant du client
-	 * @return Une liste de numéros de compte
+	 * @param cons : Le conseiller en session
+	 * @return Une liste de comptes
 	 */
-	public ArrayList<Integer> getListeComptesCourant(int id);
+	public ArrayList<Compte> getListeComptes(Conseiller cons);;
+	
 	
 	/**
-	 * Méthode qui récupère la liste des numéros de compte épargne d'un client à partir
-	 * de son identifiant.
-	 * 
-	 * @param id
-	 *            L'identifiant du client
-	 * @return Une liste de numéros de compte
-	 */
-	public ArrayList<Integer> getListeComptesEpargne(int id);
-	
-	/**
-	 * Méthode de modification d'un compte Courant.
+	 * Méthode de modification d'un compte.
 	 * @param compte : compte
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public int updateCourant(CompteCourant compte) throws LigneInexistanteException;
+	public Compte updateCompte(Compte comt) throws LigneInexistanteException;
+
+
+
+
 	
-	/**
-	 * Méthode de modification d'un compte Epargne.
-	 * @param compte
-	 * @return
-	 * @throws LigneInexistanteException
-	 */
-	public int updateEpargne(CompteEpargne compte) throws LigneInexistanteException;
 	
-	/**
-	 * Méthode pour déterminer le type d'un compte soit Courant soit Epargne.
-	 * @param id : l'identifiant du client
-	 * @return
-	 * @throws LigneInexistanteException
-	 */
-	public String typeCompte(int id) throws LigneInexistanteException;
+
+
+
+
+	
+
+
+
+	
+
+
+
+	
+
+	
 	
 
 	

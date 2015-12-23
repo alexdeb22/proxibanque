@@ -40,7 +40,7 @@ public interface IClientService {
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public int modifierClient(Client cli) throws LigneInexistanteException;
+	public Client modifierClient(Client cli) throws LigneInexistanteException;
 	
 	/**
 	 * Méthode pour supprimer un client et ses comptes.
@@ -50,19 +50,7 @@ public interface IClientService {
 	 */
 	public int supprimerClient(Client cli) throws LigneInexistanteException;
 	
-	/**
-	 * Méthode pour lister les comptes courants d'un client.
-	 * @param cli : le client
-	 * @return
-	 */
-	public Client getListeComptesCourant(Client cli);
-	
-	/**
-	 * Méthode pour lister les comptes épargnes d'un client.
-	 * @param cli : le client
-	 * @return
-	 */
-	public Client getListeComptesEpargne(Client cli);
+;
 	
 	public ArrayList<CompteCourant> getComptesCourant(Client cli) throws LigneInexistanteException;
 	

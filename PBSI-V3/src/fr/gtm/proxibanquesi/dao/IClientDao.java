@@ -3,6 +3,7 @@ package fr.gtm.proxibanquesi.dao;
 import java.util.ArrayList;
 
 import fr.gtm.proxibanquesi.domaine.Client;
+import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
@@ -23,7 +24,7 @@ public interface IClientDao {
 	 * @return
 	 * @throws LigneExistanteException
 	 */
-	public int create(Client cli) throws LigneExistanteException;
+	public Client create(Client cli) throws LigneExistanteException;
 
 	/**
 	 * Méthode de lecture des informations du client.
@@ -43,7 +44,7 @@ public interface IClientDao {
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public int update(Client cli) throws LigneInexistanteException;
+	public Client update(Client cli) throws LigneInexistanteException;
 
 	/**
 	 * Méthode pour effacer un client.
@@ -55,25 +56,7 @@ public interface IClientDao {
 	 */
 	public int delete(Client cli) throws LigneInexistanteException;
 
-	/**
-	 * Méthode pour récupérer l'identifiant d'un client à partir de son nom,
-	 * prénom et adresse.
-	 * 
-	 * @param cli
-	 *            : le client
-	 * @return
-	 * @throws LigneInexistanteException
-	 */
-	public Client getID(Client cli) throws LigneInexistanteException;
 
-	/**
-	 * Méthode qui récupère la liste des identifiants clients à partir de
-	 * l'identifiant d'un conseiller.
-	 * 
-	 * @param idcons
-	 *            L'identifiant du conseiller responsable des clients.
-	 * @return Une liste d'identifiants client.
-	 */
-	public ArrayList<Integer> getListeClients(int idcons);
+	
 
 }

@@ -13,9 +13,9 @@ public class CompteEpargne extends Compte {
 	public CompteEpargne() {
 		super();
 	}
-	public CompteEpargne(double tauxRemuneration) {
-		this();
-		this.tauxRemuneration = tauxRemuneration;
+	public CompteEpargne(double solde) {
+		super();
+		setSolde(solde);
 	}
 
 	// Getters & Setters

@@ -13,6 +13,8 @@ import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
 public class ConseillerService implements IConseillerService {
 	
+	IConseillerDao dao = new ConseillerDao();
+	
 	// TODO: create Conseiller
 	public Conseiller createConseiller(Conseiller cons) throws LigneExistanteException, LigneInexistanteException {
 		IConseillerDao dao = new ConseillerDao();
@@ -30,28 +32,26 @@ public class ConseillerService implements IConseillerService {
 	}
 
 	@Override
-	public Conseiller getListeClients(Conseiller cons) {
-		IClientDao dao = new ClientDao();
-		cons.setListeClient(dao.getListeClients(cons.getIdcons()));
-		return cons;
+	public ArrayList<Client> getListeClients(Conseiller cons) {
+		return dao.getListeClients(cons);
 	}
-
-	@Override
-	public ArrayList<Client> getClients(Conseiller cons) throws LigneInexistanteException {
-		// TODO Auto-generated method stub
-		IClientDao dao = new ClientDao();
-		ArrayList<Integer> listeIndex = cons.getListeClient();
-		if (listeIndex.size() > 0) {
-			ArrayList<Client> listeClients = new ArrayList<Client>();
-			for(int i = 0; i < listeIndex.size(); i++) {
-				Client cli = new Client();
-				cli.setId(listeIndex.get(i));
-				cli = dao.read(cli);
-				listeClients.add(cli);
-				}
-			return listeClients;
-		} else return null;
-		
-	}
+//
+//	@Override
+//	public ArrayList<Client> getClients(Conseiller cons) throws LigneInexistanteException {
+//		// TODO Auto-generated method stub
+//		IClientDao dao = new ClientDao();
+//		ArrayList<Integer> listeIndex = cons.getListeClient();
+//		if (listeIndex.size() > 0) {
+//			ArrayList<Client> listeClients = new ArrayList<Client>();
+//			for(int i = 0; i < listeIndex.size(); i++) {
+//				Client cli = new Client();
+//				cli.setId(listeIndex.get(i));
+//				cli = dao.read(cli);
+//				listeClients.add(cli);
+//				}
+//			return listeClients;
+//		} else return null;
+//		
+//	}
 
 }
