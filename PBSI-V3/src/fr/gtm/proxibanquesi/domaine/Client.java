@@ -1,7 +1,5 @@
 package fr.gtm.proxibanquesi.domaine;
 
-import java.util.ArrayList;
-
 /** Classe représentant un client de la banque.
  * Toutes les informations personnelles hormis le numéro d'identification sont de type String.
  * @author Martin Coralie - De Bruyn Alexandre

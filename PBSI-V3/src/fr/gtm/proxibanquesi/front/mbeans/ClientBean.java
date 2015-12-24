@@ -2,6 +2,7 @@ package fr.gtm.proxibanquesi.front.mbeans;
 
 import java.util.ArrayList;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -15,8 +16,7 @@ import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 import fr.gtm.proxibanquesi.service.IClientService;
 
-@ManagedBean(name="client")
-@ViewScoped
+@ManagedBean(name="clientbean")
 public class ClientBean {
 	
 	@ManagedProperty(value="#{conseiller}")
@@ -120,6 +120,28 @@ public class ClientBean {
 					"Un problème est survenu.");
 			FacesContext.getCurrentInstance().addMessage("creerclient-form", message);
 		}
+	}
+	
+	public String consulterClient() {
+		Client client = new Client();
+		client.setCons(cons.getIdcons());
+		client.setId(getId());
+		
+		try {
+			client = serv.consulterClient(client);
+			nom = client.getNom();
+			prenom = client.getPrenom();
+			adresse = client.getAdresse();
+			codePostal = client.getCodePostal();
+			ville = client.getVille();
+			telephone = client.getTelephone();
+			id = client.getId();
+		} catch (LigneInexistanteException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur",
+					"Le client n'existe pas dans la base");
+			FacesContext.getCurrentInstance().addMessage("clientpage-grid", message);
+		}
+		return "client-page";
 	}
 	
 }

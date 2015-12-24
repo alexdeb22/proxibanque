@@ -33,36 +33,28 @@
 					</p:menubar>
 				</h:form>
 				
-				<p:message id="message-read-client" showDetail="true"
-							autoUpdate="true" for="clientpage-table" />
-				<p:dataTable id="clientpage-table" value="#{client}"
-					var="client">
-					<f:facet name="header">
-						<h:outputText value="Informations client" />
-					</f:facet>
-					<p:column headerText="Identifiant">
-						<h:outputText value="#{client.id}" />
-					</p:column>
-					<p:column headerText="Nom">
-						<h:outputText value="#{client.nom}" />
-					</p:column>
-					<p:column headerText="Prenom">
-						<h:outputText value="#{client.prenom}" />
-					</p:column>
-					<p:column headerText="Adresse">
-						<h:outputText value="#{client.adresse}" />
-					</p:column>
-					<p:column headerText="Code Postal">
-						<h:outputText value="#{client.codePostal}" />
-					</p:column>
-					<p:column headerText="Ville">
-						<h:outputText value="#{client.ville}" />
-					</p:column>
-					<p:column headerText="Téléphone">
-						<h:outputText value="#{client.telephone}" />
-					</p:column>
-				</p:dataTable>
 				
+<f:metadata>
+    <f:viewParam name="idclient" value="#{clientbean.id}" />
+</f:metadata>
+<h:form>
+<p:button outcome="#{clientbean.consulterClient()}" value="Voir" icon="ui-icon-star" />
+</h:form>
+
+				<p:panelGrid columns="7" layout="grid" id="clientpage-grid">
+				<p:message id="message-read-client" showDetail="true"
+							autoUpdate="true" for="clientpage-grid" />
+					<h:outputText value="#{clientbean.id}" />
+					<h:outputText value="#{clientbean.nom}" />
+					<h:outputText value="#{clientbean.prenom}" />
+					
+					<h:outputText value="#{clientbean.adresse}" />
+					<h:outputText value="#{clientbean.codePostal}" />
+					<h:outputText value="#{clientbean.ville}" />
+					
+					<h:outputText value="#{clientbean.telephone}" />
+
+				</p:panelGrid>
 				<!-- <h:form id="creerclient-form">
 					<p:panel id="creationClient" header="Nouveau client">
 						<p:message id="message-create-client" showDetail="true"
