@@ -1,13 +1,14 @@
 package fr.gtm.proxibanquesi.service;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.dao.IClientDao;
-import fr.gtm.proxibanquesi.dao.ICompteDao;
 import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
+@Stateless
 public class ClientService implements IClientService {
 	
 	@Inject

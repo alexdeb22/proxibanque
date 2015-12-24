@@ -72,10 +72,9 @@ public class ConseillerDao implements IConseillerDao {
 	public Conseiller read(Conseiller cons) throws LigneInexistanteException {
 		try {
 			Connection cnx = BddConnector.connect();
-			String check = "select count(*) from Conseiller where login = ?"
-					+ " and mdp = ?";
+			String check = "select count(*) from Conseiller where login = ? and mdp = ?";
 			PreparedStatement checkstat = cnx.prepareStatement(check);
-			checkstat.setString(1, cons.getLogin());
+			checkstat.setString(1, cons.getLogin().toUpperCase());
 			checkstat.setString(2, cons.getMdp());
 			ResultSet checkres = checkstat.executeQuery(); 
 			checkres.next();
@@ -84,20 +83,19 @@ public class ConseillerDao implements IConseillerDao {
 				throw new LigneInexistanteException("Ce conseiller n'existe pas dans la base.");
 			}
 			// Statement preparation
-			String sql = "select * from conseiller where login = ?"
-					+ " and mdp = ?";
+			String sql = "select * from conseiller where login = ? and mdp = ?";
 			java.sql.PreparedStatement stat;
 			stat = cnx.prepareStatement(sql);			
-			stat.setString(1, cons.getLogin());
+			stat.setString(1, cons.getLogin().toUpperCase());
 			stat.setString(2, cons.getMdp());
 			// Statement execution
 			ResultSet res = stat.executeQuery();
-			res.next();
+			while(res.next()) {
 			cons.setNom(res.getString("nom"));
 			cons.setPrenom(res.getString("prenom"));
 			cons.setIdagence(res.getInt("idagence"));
 			cons.setIdcons(res.getInt("idcons"));
-
+			}
 			BddConnector.unconnect(cnx);			
 			
 		} catch (SQLException ex) {

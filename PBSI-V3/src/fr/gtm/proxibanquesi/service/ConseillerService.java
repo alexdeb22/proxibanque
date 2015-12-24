@@ -2,6 +2,7 @@ package fr.gtm.proxibanquesi.service;
 
 import java.util.ArrayList;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.dao.IConseillerDao;
@@ -10,6 +11,7 @@ import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
+@Stateless
 public class ConseillerService implements IConseillerService {
 	
 	@Inject

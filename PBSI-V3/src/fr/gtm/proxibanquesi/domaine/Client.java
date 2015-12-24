@@ -18,8 +18,6 @@ public class Client {
 	/** Numéro d'identification du client */
 	private int id;
 	private int cons;
-	private ArrayList<Integer> listeComptesCourant;
-	private ArrayList<Integer> listeComptesEpargne;
 //	/** Liste des placements effectués pour ce client */
 //	private ArrayList<Placement> patrimoine;
 
@@ -106,21 +104,6 @@ public class Client {
 		this.cons = cons;
 	}
 
-	public ArrayList<Integer> getListeComptesCourant() {
-		return listeComptesCourant;
-	}
-
-	public void setListeComptesCourant(ArrayList<Integer> listeComptesCourant) {
-		this.listeComptesCourant = listeComptesCourant;
-	}
-
-	public ArrayList<Integer> getListeComptesEpargne() {
-		return listeComptesEpargne;
-	}
-
-	public void setListeComptesEpargne(ArrayList<Integer> listeComptesEpargne) {
-		this.listeComptesEpargne = listeComptesEpargne;
-	}
 
 	// Affichage
 	@Override
