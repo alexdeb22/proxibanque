@@ -18,8 +18,6 @@ public class Conseiller {
 	private int idagence;
 	/** True si le conseiller est également le gérant de l'agence. */
 	private boolean gerant = false;
-	/** Liste des numéros d'identification des clients à la charge du conseiller. */
-	private ArrayList<Integer> listeClient = new ArrayList<Integer>();
 	
 	private String login;
 	private String mdp;
@@ -92,17 +90,11 @@ public class Conseiller {
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
-	public ArrayList<Integer> getListeClient() {
-		// TODO: acceder au dao pour donnees clients (nom, prenom)
-		return this.listeClient;
-	}
-	public void setListeClient(ArrayList<Integer> listeClient) {
-		this.listeClient = listeClient;
-	}
+
 	@Override
 	public String toString() {
 		return "Conseiller [prenom=" + prenom + ", nom=" + nom + ", idcons=" + idcons + ", idagence=" + idagence
-				+ ", gerant=" + gerant + ", listeClient=" + listeClient + ", login=" + login + ", mdp=" + mdp + "]";
+				+ ", gerant=" + gerant + ", login=" + login + ", mdp=" + mdp + "]";
 	}
 
 

@@ -5,13 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.gtm.proxibanquesi.dao.util.BddConnector;
 import fr.gtm.proxibanquesi.domaine.Client;
-import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
@@ -144,8 +142,32 @@ public class ClientDao implements IClientDao {
 
 	@Override
 	public int delete(Client cli) throws LigneInexistanteException {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = 0;
+		try {
+			Connection cnx = BddConnector.connect();
+			String check = "select count(*) from Client where idclient = ?";
+			PreparedStatement checkstat = cnx.prepareStatement(check);
+			checkstat.setInt(1, cli.getId());
+			ResultSet checkres = checkstat.executeQuery();
+			checkres.next();
+			if (checkres.getInt(1) == 0) {
+				BddConnector.unconnect(cnx);
+				throw new LigneInexistanteException("Ce client n'existe pas dans la base.");
+			}
+			// Statement preparation
+			String sql = "delete from Client where idclient=?";
+			java.sql.PreparedStatement stat;
+			stat = cnx.prepareStatement(sql);
+			stat.setInt(1, cli.getId());
+			// Statement execution
+			res = stat.executeUpdate();
+
+			BddConnector.unconnect(cnx);
+		} catch (SQLException ex) {
+			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return res;
 	}
 
 

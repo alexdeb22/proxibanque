@@ -2,32 +2,28 @@ package fr.gtm.proxibanquesi.service;
 
 import java.util.ArrayList;
 
-import fr.gtm.proxibanquesi.dao.ClientDao;
-import fr.gtm.proxibanquesi.dao.ConseillerDao;
-import fr.gtm.proxibanquesi.dao.IClientDao;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
 import fr.gtm.proxibanquesi.dao.IConseillerDao;
 import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
+@Stateless
 public class ConseillerService implements IConseillerService {
 	
-	IConseillerDao dao = new ConseillerDao();
+	@Inject
+	IConseillerDao dao;
 	
-	// TODO: create Conseiller
+	@Override
 	public Conseiller createConseiller(Conseiller cons) throws LigneExistanteException, LigneInexistanteException {
-		IConseillerDao dao = new ConseillerDao();
-		dao.create(cons);
-		cons = dao.getID(cons);
-		return cons;
-	
+		return dao.create(cons);
 	}
 
 	@Override
 	public Conseiller checkUser(Conseiller userTemp) throws LigneInexistanteException {
-		IConseillerDao dao = new ConseillerDao();
-		userTemp = dao.getUser(userTemp);
 		return dao.read(userTemp);
 	}
 
@@ -35,23 +31,16 @@ public class ConseillerService implements IConseillerService {
 	public ArrayList<Client> getListeClients(Conseiller cons) {
 		return dao.getListeClients(cons);
 	}
-//
-//	@Override
-//	public ArrayList<Client> getClients(Conseiller cons) throws LigneInexistanteException {
-//		// TODO Auto-generated method stub
-//		IClientDao dao = new ClientDao();
-//		ArrayList<Integer> listeIndex = cons.getListeClient();
-//		if (listeIndex.size() > 0) {
-//			ArrayList<Client> listeClients = new ArrayList<Client>();
-//			for(int i = 0; i < listeIndex.size(); i++) {
-//				Client cli = new Client();
-//				cli.setId(listeIndex.get(i));
-//				cli = dao.read(cli);
-//				listeClients.add(cli);
-//				}
-//			return listeClients;
-//		} else return null;
-//		
-//	}
+
+	@Override
+	public Conseiller updateConseiller(Conseiller userTemp) throws LigneInexistanteException {
+		return dao.update(userTemp);
+	}
+
+	@Override
+	public int delete(Conseiller cons) throws LigneInexistanteException {
+		return dao.delete(cons);
+	}
+
 
 }

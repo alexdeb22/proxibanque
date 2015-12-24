@@ -22,7 +22,7 @@ public interface IConseillerDao {
 	 * @return
 	 * @throws LigneExistanteException
 	 */
-	public int create(Conseiller cons) throws LigneExistanteException;
+	public Conseiller create(Conseiller cons) throws LigneExistanteException;
 	
 	/**
 	 * Méthode pour lire les informations d'un conseiller.
@@ -38,7 +38,7 @@ public interface IConseillerDao {
 	 * @return
 	 * @throws LigneInexistanteException
 	 */
-	public int update(Conseiller cons) throws LigneInexistanteException;
+	public Conseiller update(Conseiller cons) throws LigneInexistanteException;
 	
 	/**
 	 * Méthode pour supprimer un conseiller.
@@ -48,15 +48,6 @@ public interface IConseillerDao {
 	 */
 	public int delete(Conseiller cons) throws LigneInexistanteException;
 	
-	/**
-	 * Méthode pour lire les informations d'un conseiller à partir de son identifiant.
-	 * @param cons qui est le conseiller.
-	 * @return
-	 * @throws LigneInexistanteException
-	 */
-	public Conseiller getID(Conseiller cons) throws LigneInexistanteException;
-	
-	public Conseiller getUser(Conseiller userTemp) throws LigneInexistanteException;
 
 	public ArrayList<Client> getListeClients(Conseiller cons);
 

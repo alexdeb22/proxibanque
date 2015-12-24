@@ -13,6 +13,10 @@ public interface IConseillerService {
 
 	public Conseiller checkUser(Conseiller userTemp) throws LigneInexistanteException;
 	
+	public Conseiller updateConseiller(Conseiller userTemp) throws LigneInexistanteException;
+	
+	public int delete(Conseiller cons) throws LigneInexistanteException;
+	
 	public ArrayList<Client> getListeClients(Conseiller cons);
 
 }
