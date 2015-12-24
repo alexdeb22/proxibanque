@@ -9,8 +9,63 @@
 	<f:view>
 		<ui:composition template="template/layout.xhtml">
 			<ui:define name="content">
-				<h:form/>
-				
+				<h:form>
+					<p:menubar>
+
+						<p:menuitem value="Home" url="user-page.xhtml" />
+
+						<p:submenu label="Operations courantes">
+							<p:menuitem value="Créer un client" url="client-form.xhtml" />
+							<p:menuitem value="Modifer Client" url="#" />
+							<p:menuitem value="Creer un compte" url="#" />
+							<p:menuitem value="Virement" url="#" />
+						</p:submenu>
+
+						<p:menuitem value="Placement" url="user-page" />
+
+						<p:submenu label="Simulation de crédit">
+							<p:menuitem value="Consommation" url="#" />
+							<p:menuitem value="Immobilier" url="#" />
+						</p:submenu>
+
+						<p:menuitem value="Audit" url="#" />
+
+					</p:menubar>
+				</h:form>
+				<h:form id="creerclient-form">
+					<p:panel id="creationClient" header="Nouveau client">
+						<p:message id="message-create-client" showDetail="true"
+							autoUpdate="true" for="creerclient-form" />
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:outputLabel for="nom" value="Nom:" class="form-field" />
+							<p:inputText id="nom" required="true" class="form-field"
+								value="#{client.nom}" />
+							<p:outputLabel for="prenom" value="Prenom:" class="form-field" />
+							<p:inputText id="prenom" required="true" class="form-field"
+								value="#{client.prenom}" />
+							<p:outputLabel for="adresse" value="Adresse:" class="form-field" />
+							<p:inputText id="adresse" required="true" class="form-field"
+								value="#{client.adresse}" />
+							<p:outputLabel for="codepostal" value="Code postal:"
+								class="form-field" />
+							<p:inputText id="codepostal" required="true" class="form-field"
+								value="#{client.codePostal}" />
+							<p:outputLabel for="ville" value="Ville:" class="form-field" />
+							<p:inputText id="ville" required="true" class="form-field"
+								value="#{client.ville}" />
+							<p:outputLabel for="telephone" value="Telephone:" class="form-field" />
+							<p:inputText id="telephone" required="true" class="form-field"
+								value="#{client.telephone}" />
+						</h:panelGrid>
+						<h:commandButton action="#{client.creerClient()}"
+							value="Valider" />
+						<!-- 								<p:commandButton value="Submit" id="ajax" -->
+						<!-- 									styleClass="ui-priority-primary" -->
+						<!-- 									action="#{conseiller.validerLogin()}" /> -->
+						<f:phaseListener
+							type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
+					</p:panel>
+				</h:form>
 			</ui:define>
 		</ui:composition>
 	</f:view>

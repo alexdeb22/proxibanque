@@ -22,7 +22,7 @@ public final class BddConnector {
 	/** Login of the database user. */
 	private static String login = "PROXIBANQUE";
 	/** Password of the database user. */
-	private static String password = "PROXIPASS";
+	private static String password = "proxipass";
 
 	// Methods
 	 /** Create a connection to the database.

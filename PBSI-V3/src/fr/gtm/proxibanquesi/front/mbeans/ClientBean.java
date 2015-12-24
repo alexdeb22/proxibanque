@@ -2,14 +2,17 @@ package fr.gtm.proxibanquesi.front.mbeans;
 
 import java.util.ArrayList;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Compte;
+import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
+import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 import fr.gtm.proxibanquesi.service.IClientService;
 
 @ManagedBean(name="client")
@@ -96,7 +99,27 @@ public class ClientBean {
 
 	public void creerClient() {
 		Client client = new Client(nom, prenom, adresse, codePostal, ville, telephone, cons.getIdcons());
-		
+		try {
+			client = serv.createClient(client);
+			nom = client.getNom();
+			prenom = client.getPrenom();
+			adresse = client.getAdresse();
+			codePostal = client.getCodePostal();
+			ville = client.getVille();
+			telephone = client.getTelephone();
+			id = client.getId();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
+					"Client créé avec succès.");
+			FacesContext.getCurrentInstance().addMessage("creerclient-form", message);
+		} catch (LigneExistanteException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur",
+					"Ce client existe déja.");
+			FacesContext.getCurrentInstance().addMessage("creerclient-form", message);
+		} catch (LigneInexistanteException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur",
+					"Un problème est survenu.");
+			FacesContext.getCurrentInstance().addMessage("creerclient-form", message);
+		}
 	}
 	
 }
