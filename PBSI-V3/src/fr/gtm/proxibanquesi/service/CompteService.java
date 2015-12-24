@@ -4,15 +4,11 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import fr.gtm.proxibanquesi.dao.ClientDao;
-import fr.gtm.proxibanquesi.dao.CompteDao;
-import fr.gtm.proxibanquesi.dao.IClientDao;
 import fr.gtm.proxibanquesi.dao.ICompteDao;
 import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.CompteCourant;
 import fr.gtm.proxibanquesi.domaine.CompteEpargne;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
-import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 import fr.gtm.proxibanquesi.exceptions.SoldeInsuffisantException;
 

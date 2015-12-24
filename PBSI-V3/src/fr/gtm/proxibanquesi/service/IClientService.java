@@ -1,14 +1,8 @@
 package fr.gtm.proxibanquesi.service;
 
-import java.util.ArrayList;
-
 import fr.gtm.proxibanquesi.domaine.Client;
-import fr.gtm.proxibanquesi.domaine.Compte;
-import fr.gtm.proxibanquesi.domaine.CompteCourant;
-import fr.gtm.proxibanquesi.domaine.CompteEpargne;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
-import fr.gtm.proxibanquesi.exceptions.SoldeInsuffisantException;
 
 /**
  * Interface de la couche Service du Client
@@ -50,11 +44,6 @@ public interface IClientService {
 	 */
 	public int supprimerClient(Client cli) throws LigneInexistanteException;
 	
-;
-	
-	public ArrayList<CompteCourant> getComptesCourant(Client cli) throws LigneInexistanteException;
-	
-	public ArrayList<CompteEpargne> getComptesEpargne(Client cli) throws LigneInexistanteException;
 	
 
 }
