@@ -26,10 +26,12 @@
 									<p:password id="password" required="true" class="form-field"
 										value="#{conseiller.mdp}" />
 								</h:panelGrid>
-								<h:commandButton action="#{conseiller.validerLogin()}" value="Valider" />
-<!-- 								<p:commandButton value="Submit" id="ajax" -->
-<!-- 									styleClass="ui-priority-primary" -->
-<!-- 									action="#{conseiller.validerLogin()}" /> -->
+								<h:commandButton action="#{conseiller.validerLogin()}"
+									value="Valider" />
+								<!-- 								<p:commandButton value="Submit" id="ajax" -->
+								<!-- 									styleClass="ui-priority-primary" -->
+								<!-- 									action="#{conseiller.validerLogin()}" /> -->
+								<f:phaseListener type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
 							</p:panel>
 						</h:form>
 					</div>

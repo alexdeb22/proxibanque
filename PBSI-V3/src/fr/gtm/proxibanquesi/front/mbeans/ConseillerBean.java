@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseListener;
 import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.domaine.Client;
@@ -22,6 +23,7 @@ public class ConseillerBean {
 	@Inject
 	IConseillerService serv;
 
+	
 	private String login;
 	private String mdp;
 	private String nom;
@@ -101,11 +103,11 @@ public class ConseillerBean {
 	 * @return
 	 */
 	public String validerLogin() {
-		// Revoir cycle de vie, normalement inutile
+		// Revoir cycle de vie, normalement inutile?
 		if(null == login | null == mdp) {
 			return null;
 		}
-		// Cfreation de l'objet conseiller
+		// Creation de l'objet conseiller
 		Conseiller cons = new Conseiller();
 		cons.setLogin(login);
 		cons.setMdp(mdp);
@@ -116,6 +118,11 @@ public class ConseillerBean {
 			nom = cons.getNom();
 			prenom = cons.getPrenom();
 			idcons = cons.getIdcons();
+			// Récupérer la liste des clients
+			listeClients = serv.getListeClients(cons);
+			// Debug
+			System.out.println(listeClients);
+			return "user-page";
 		} catch (LigneInexistanteException e) {
 			// Si invalide retourner page existante et message d'erreur
 			// (FacesMessage)
@@ -123,17 +130,6 @@ public class ConseillerBean {
 					"Veuillez réessayer");
 			FacesContext.getCurrentInstance().addMessage("login-form", message);
 			return null;
-		}
-		
-		try {
-			// Récupérer la liste des clients
-			listeClients = serv.getListeClients(cons);
-			return "user-page";
-		} catch (LigneInexistanteException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Problème de récupération de la liste clients", "");
-			System.out.println(message.toString());
-			FacesContext.getCurrentInstance().addMessage(null, message);
-			return "user-page";
 		}
 
 	}

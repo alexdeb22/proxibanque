@@ -16,7 +16,7 @@
 
 						<p:submenu label="Operations courantes">
 							<p:menuitem value="Créer un client" url="#" />
-							<p:menuitem value="Informations Client" url="#" />
+							<p:menuitem value="Modifer Client" url="#" />
 							<p:menuitem value="Creer un compte" url="#" />
 							<p:menuitem value="Virement" url="#" />
 						</p:submenu>
@@ -32,7 +32,22 @@
 
 					</p:menubar>
 				</h:form>
-				
+
+				<p:dataTable id="listeClients" value="#{conseiller.listeClients}"
+					var="client">
+					<f:facet name="header">
+						<h:outputText value="Liste clients" />
+					</f:facet>
+					<p:column headerText="Identifiant">
+						<h:outputText value="#{client.id}" />
+					</p:column>
+					<p:column headerText="Nom">
+						<h:outputText value="#{client.nom}" />
+					</p:column>
+					<p:column headerText="Prenom">
+						<h:outputText value="#{client.prenom}" />
+					</p:column>
+				</p:dataTable>
 
 			</ui:define>
 		</ui:composition>
