@@ -5,11 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.gtm.proxibanquesi.dao.util.BddConnector;
 import fr.gtm.proxibanquesi.domaine.Client;
+import fr.gtm.proxibanquesi.domaine.Compte;
+import fr.gtm.proxibanquesi.domaine.CompteCourant;
+import fr.gtm.proxibanquesi.domaine.CompteEpargne;
+import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
@@ -170,6 +175,36 @@ public class ClientDao implements IClientDao {
 		return res;
 	}
 
+	@Override
+	public ArrayList<Compte> getListeComptesClient(Client client) {
+		ArrayList<Compte> listeComptesClient = new ArrayList<Compte>();
+		try {
+			Connection cnx = BddConnector.connect();
 
+			String sql = "select numCompte, solde, dateOuverture, idclient, type, autodecouvert, taux from Compte WHERE idclient = ?";
+			PreparedStatement stat = cnx.prepareStatement(sql);
+			stat.setInt(1, client.getId());
+			ResultSet res = stat.executeQuery();
+			Compte compTemp = null;
+			while (res.next()) {
+				if (res.getString("type").equals("Courant")) {
+					compTemp = new CompteCourant();
+					((CompteCourant) compTemp).setAutorisationDecouvert(res.getDouble("autodecouvert"));
+				} else if (res.getString("type").equals("Epargne")) {
+					compTemp = new CompteEpargne();
+					((CompteEpargne) compTemp).setTauxRemuneration(res.getDouble("taux"));
+				}
+				compTemp.setIdcli(res.getInt("idclient"));
+				compTemp.setNumCompte(res.getInt("numCompte"));
+				compTemp.setSolde(res.getDouble("solde"));
+				compTemp.setDateOuverture(res.getDate("dateOuverture"));
+				listeComptesClient.add(compTemp);
+			}
+
+		} catch (SQLException ex) {
+			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return listeComptesClient;
+	}
 
 }

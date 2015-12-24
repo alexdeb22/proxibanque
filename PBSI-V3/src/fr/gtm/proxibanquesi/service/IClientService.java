@@ -1,6 +1,9 @@
 package fr.gtm.proxibanquesi.service;
 
+import java.util.ArrayList;
+
 import fr.gtm.proxibanquesi.domaine.Client;
+import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
@@ -44,6 +47,12 @@ public interface IClientService {
 	 */
 	public int supprimerClient(Client cli) throws LigneInexistanteException;
 	
-	
+	/**
+	 * Méthode qui récupère la liste des comptes d'un client.
+	 * 
+	 * @param client : Le client
+	 * @return Une liste de comptes
+	 */
+	public ArrayList<Compte> getListeComptesClient(Client client);
 
 }

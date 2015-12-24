@@ -1,10 +1,13 @@
 package fr.gtm.proxibanquesi.service;
 
+import java.util.ArrayList;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.dao.IClientDao;
 import fr.gtm.proxibanquesi.domaine.Client;
+import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
@@ -33,6 +36,11 @@ public class ClientService implements IClientService {
 	@Override
 	public int supprimerClient(Client cli) throws LigneInexistanteException {
 		return dao.delete(cli);
+	}
+
+	@Override
+	public ArrayList<Compte> getListeComptesClient(Client client) {
+		return dao.getListeComptesClient(client);
 	}
 	
 	
