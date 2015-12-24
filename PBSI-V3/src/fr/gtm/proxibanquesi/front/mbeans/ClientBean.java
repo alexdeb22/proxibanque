@@ -1,5 +1,6 @@
 package fr.gtm.proxibanquesi.front.mbeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
@@ -17,20 +18,27 @@ import fr.gtm.proxibanquesi.service.IClientService;
 
 @ManagedBean(name="client")
 @ViewScoped
-public class ClientBean {
+public class ClientBean implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@ManagedProperty(value="#{conseiller}")
 	private ConseillerBean cons;
 
 	@Inject
 	private IClientService serv;
 	
+	@ManagedProperty(value="#{conseiller.selectedClient.nom}")
 	private String nom;
 	private String prenom;
 	private String adresse;
 	private String codePostal;
 	private String ville;
 	private String telephone;
+	@ManagedProperty(value="#{conseiller.selectedClient.id}")
 	private int id;
 	private ArrayList<Compte> listeComptes;
 	
@@ -122,4 +130,10 @@ public class ClientBean {
 		}
 	}
 	
+	public String getClientPage() {
+		
+		Client client = cons.getSelectedClient();
+		System.out.println(client);
+		return "client-page.xhtml";
+	}
 }

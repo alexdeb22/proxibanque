@@ -1,5 +1,6 @@
 package fr.gtm.proxibanquesi.front.mbeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseListener;
 import javax.inject.Inject;
 
+import org.primefaces.event.SelectEvent;
+
 import fr.gtm.proxibanquesi.domaine.Client;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
@@ -18,7 +21,13 @@ import fr.gtm.proxibanquesi.service.IConseillerService;
 
 @ManagedBean(name = "conseiller")
 @SessionScoped
-public class ConseillerBean {
+public class ConseillerBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	@Inject
 	IConseillerService serv;
@@ -30,6 +39,8 @@ public class ConseillerBean {
 	private String prenom;
 	private int idcons;
 	private ArrayList<Client> listeClients = new ArrayList<Client>();
+	
+	private Client selectedClient;
 
 	public ConseillerBean() {
 		super();
@@ -83,6 +94,14 @@ public class ConseillerBean {
 		this.listeClients = listeClients;
 	}
 
+	public Client getSelectedClient() {
+		return selectedClient;
+	}
+
+	public void setSelectedClient(Client selectedClient) {
+		this.selectedClient = selectedClient;
+	}
+
 	@PostConstruct
 	public void creationBean() {
 		System.out.println("Creation du bean");
@@ -133,5 +152,12 @@ public class ConseillerBean {
 		}
 
 	}
+	
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Client choisi", ((Client) event.getObject()).getNom());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        selectedClient = (Client) event.getObject();
+    }
+    
 
 }

@@ -29,74 +29,36 @@
 						</p:submenu>
 
 						<p:menuitem value="Audit" url="#" />
+						
+						<p:menuitem value="#{conseiller.selectedClient.nom}"/>
 
 					</p:menubar>
+
+
 				</h:form>
 				
-				<p:message id="message-read-client" showDetail="true"
-							autoUpdate="true" for="clientpage-table" />
-				<p:dataTable id="clientpage-table" value="#{client}"
-					var="client">
+				
+
+				<p:dataTable id="client" value="#{client}"
+					var="cli" >
 					<f:facet name="header">
-						<h:outputText value="Informations client" />
+						<h:outputText value="Informations Client" />
 					</f:facet>
+					
 					<p:column headerText="Identifiant">
-						<h:outputText value="#{client.id}" />
+						<h:outputText value="#{id}" />
 					</p:column>
 					<p:column headerText="Nom">
-						<h:outputText value="#{client.nom}" />
+						<h:outputText value="#{nom}" />
 					</p:column>
 					<p:column headerText="Prenom">
-						<h:outputText value="#{client.prenom}" />
-					</p:column>
-					<p:column headerText="Adresse">
-						<h:outputText value="#{client.adresse}" />
-					</p:column>
-					<p:column headerText="Code Postal">
-						<h:outputText value="#{client.codePostal}" />
-					</p:column>
-					<p:column headerText="Ville">
-						<h:outputText value="#{client.ville}" />
-					</p:column>
-					<p:column headerText="Téléphone">
-						<h:outputText value="#{client.telephone}" />
+						<h:outputText value="#{prenom}" />
 					</p:column>
 				</p:dataTable>
-				
-				<!-- <h:form id="creerclient-form">
-					<p:panel id="creationClient" header="Nouveau client">
-						<p:message id="message-create-client" showDetail="true"
-							autoUpdate="true" for="creerclient-form" />
-						<h:panelGrid columns="2" cellpadding="10">
-							<p:outputLabel for="nom" value="Nom:" class="form-field" />
-							<p:inputText id="nom" required="true" class="form-field"
-								value="#{client.nom}" />
-							<p:outputLabel for="prenom" value="Prenom:" class="form-field" />
-							<p:inputText id="prenom" required="true" class="form-field"
-								value="#{client.prenom}" />
-							<p:outputLabel for="adresse" value="Adresse:" class="form-field" />
-							<p:inputText id="adresse" required="true" class="form-field"
-								value="#{client.adresse}" />
-							<p:outputLabel for="codepostal" value="Code postal:"
-								class="form-field" />
-							<p:inputText id="codepostal" required="true" class="form-field"
-								value="#{client.codePostal}" />
-							<p:outputLabel for="ville" value="Ville:" class="form-field" />
-							<p:inputText id="ville" required="true" class="form-field"
-								value="#{client.ville}" />
-							<p:outputLabel for="telephone" value="Telephone:" class="form-field" />
-							<p:inputText id="telephone" required="true" class="form-field"
-								value="#{client.telephone}" />
-						</h:panelGrid>
-						<h:commandButton action="#{client.creerClient()}"
-							value="Valider" /> -->
-						<!-- 								<p:commandButton value="Submit" id="ajax" -->
-						<!-- 									styleClass="ui-priority-primary" -->
-						<!-- 									action="#{conseiller.validerLogin()}" /> -->
-						<f:phaseListener
-							type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
-					<!-- </p:panel>
-				</h:form> -->
+
+	<p:outputLabel value="#{client.nom}"></p:outputLabel>
+
+				<f:phaseListener type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
 			</ui:define>
 		</ui:composition>
 	</f:view>
