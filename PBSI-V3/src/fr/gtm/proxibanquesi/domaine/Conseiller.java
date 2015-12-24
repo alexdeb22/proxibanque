@@ -1,7 +1,5 @@
 package fr.gtm.proxibanquesi.domaine;
 
-import java.util.ArrayList;
-
 /** Cette classe représente un conseiller d'une agence ProxiBanque.
  * @author Martin Coralie - De Bruyn Alexandre
  *

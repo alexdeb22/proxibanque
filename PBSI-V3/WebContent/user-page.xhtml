@@ -29,21 +29,19 @@
 						</p:submenu>
 
 						<p:menuitem value="Audit" url="#" />
-						<p:menuitem value="#{conseiller.nom}"/>
+						<p:menuitem value="#{conseiller.nom}" />
 
 					</p:menubar>
 				</h:form>
-				
-				
-	
+
+
+
 				<p:dataTable id="listeClients" value="#{conseiller.listeClients}"
 					var="client" selectionMode="single"
-					selection="#{conseiller.selectedClient}"
-					rowKey="#{conseiller.idcons}">
+					selection="#{clientbean.client}" rowKey="#{conseiller.idcons}">
 					<f:facet name="header">
 						<h:outputText value="Liste clients" />
 					</f:facet>
-<!-- 					<p:ajax event="rowSelect" listener="#{conseiller.onRowSelect}" update=":form:msgs" /> -->
 					<p:column headerText="Identifiant">
 						<h:outputText value="#{client.id}" />
 					</p:column>
@@ -53,13 +51,13 @@
 					<p:column headerText="Prenom">
 						<h:outputText value="#{client.prenom}" />
 					</p:column>
+
+
 				</p:dataTable>
-				<h:form>
-				<h:commandButton action="#{client.getClientPage()}" value="Selectionner" />
-				</h:form>
 				<h:form id="form">
 					<p:growl id="msgs" showDetail="true" />
 				</h:form>
+
 			</ui:define>
 		</ui:composition>
 	</f:view>

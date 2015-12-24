@@ -29,36 +29,40 @@
 						</p:submenu>
 
 						<p:menuitem value="Audit" url="#" />
-						
-						<p:menuitem value="#{conseiller.selectedClient.nom}"/>
+
+						<p:menuitem value="#{clientbean.client.nom}" />
 
 					</p:menubar>
 
 
 				</h:form>
-				
-				
 
-				<p:dataTable id="client" value="#{client}"
-					var="cli" >
-					<f:facet name="header">
-						<h:outputText value="Informations Client" />
-					</f:facet>
+
+				<f:metadata>
+					<f:viewParam name="idclient" value="#{clientbean.id}" />
+				</f:metadata>
+
+				<p:panelGrid columns="7" layout="grid" id="clientpage-grid">
+
+					<p:outputLabel value="#{client.nom}"></p:outputLabel>
+
 					
-					<p:column headerText="Identifiant">
-						<h:outputText value="#{id}" />
-					</p:column>
-					<p:column headerText="Nom">
-						<h:outputText value="#{nom}" />
-					</p:column>
-					<p:column headerText="Prenom">
-						<h:outputText value="#{prenom}" />
-					</p:column>
-				</p:dataTable>
+					<p:message id="message-read-client" showDetail="true"
+						autoUpdate="true" for="clientpage-grid" />
+					<h:outputText value="#{clientbean.id}" />
+					<h:outputText value="#{clientbean.nom}" />
+					<h:outputText value="#{clientbean.prenom}" />
 
-	<p:outputLabel value="#{client.nom}"></p:outputLabel>
+					<h:outputText value="#{clientbean.adresse}" />
+					<h:outputText value="#{clientbean.codePostal}" />
+					<h:outputText value="#{clientbean.ville}" />
+
+					<h:outputText value="#{clientbean.telephone}" />
+
+				</p:panelGrid>
 
 				<f:phaseListener type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
+
 			</ui:define>
 		</ui:composition>
 	</f:view>

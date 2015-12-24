@@ -38,9 +38,9 @@ public class ConseillerBean implements Serializable {
 	private String nom;
 	private String prenom;
 	private int idcons;
-	private ArrayList<Client> listeClients = new ArrayList<Client>();
+	private ArrayList<Client> listeClients;
 	
-	private Client selectedClient;
+	private Conseiller conseiller;
 
 	public ConseillerBean() {
 		super();
@@ -94,12 +94,12 @@ public class ConseillerBean implements Serializable {
 		this.listeClients = listeClients;
 	}
 
-	public Client getSelectedClient() {
-		return selectedClient;
+	public Conseiller getConseiller() {
+		return conseiller;
 	}
 
-	public void setSelectedClient(Client selectedClient) {
-		this.selectedClient = selectedClient;
+	public void setConseiller(Conseiller conseiller) {
+		this.conseiller = conseiller;
 	}
 
 	@PostConstruct
@@ -156,7 +156,6 @@ public class ConseillerBean implements Serializable {
     public void onRowSelect(SelectEvent event) {
         FacesMessage msg = new FacesMessage("Client choisi", ((Client) event.getObject()).getNom());
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        selectedClient = (Client) event.getObject();
     }
     
 

@@ -16,8 +16,7 @@ import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 import fr.gtm.proxibanquesi.service.IClientService;
 
-@ManagedBean(name="client")
-@ViewScoped
+@ManagedBean(name="clientbean")
 public class ClientBean implements Serializable {
 	
 	/**
@@ -31,16 +30,15 @@ public class ClientBean implements Serializable {
 	@Inject
 	private IClientService serv;
 	
-	@ManagedProperty(value="#{conseiller.selectedClient.nom}")
 	private String nom;
 	private String prenom;
 	private String adresse;
 	private String codePostal;
 	private String ville;
 	private String telephone;
-	@ManagedProperty(value="#{conseiller.selectedClient.id}")
 	private int id;
 	private ArrayList<Compte> listeComptes;
+	private Client client;
 	
 	
 	public ClientBean() {
@@ -105,6 +103,14 @@ public class ClientBean implements Serializable {
 		this.cons = cons;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 	public void creerClient() {
 		Client client = new Client(nom, prenom, adresse, codePostal, ville, telephone, cons.getIdcons());
 		try {
@@ -130,10 +136,26 @@ public class ClientBean implements Serializable {
 		}
 	}
 	
-	public String getClientPage() {
-		
-		Client client = cons.getSelectedClient();
-		System.out.println(client);
-		return "client-page.xhtml";
-	}
+//	public String consulterClient() {
+//		Client client = new Client();
+//		client.setCons(cons.getIdcons());
+//		client.setId(getId());
+//		
+//		try {
+//			client = serv.consulterClient(client);
+//			nom = client.getNom();
+//			prenom = client.getPrenom();
+//			adresse = client.getAdresse();
+//			codePostal = client.getCodePostal();
+//			ville = client.getVille();
+//			telephone = client.getTelephone();
+//			id = client.getId();
+//		} catch (LigneInexistanteException e) {
+//			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur",
+//					"Le client n'existe pas dans la base");
+//			FacesContext.getCurrentInstance().addMessage("clientpage-grid", message);
+//		}
+//		return "client-page";
+//	}
+	
 }

@@ -39,25 +39,25 @@
 						<h:panelGrid columns="2" cellpadding="10">
 							<p:outputLabel for="nom" value="Nom:" class="form-field" />
 							<p:inputText id="nom" required="true" class="form-field"
-								value="#{client.nom}" />
+								value="#{clientbean.nom}" />
 							<p:outputLabel for="prenom" value="Prenom:" class="form-field" />
 							<p:inputText id="prenom" required="true" class="form-field"
-								value="#{client.prenom}" />
+								value="#{clientbean.prenom}" />
 							<p:outputLabel for="adresse" value="Adresse:" class="form-field" />
 							<p:inputText id="adresse" required="true" class="form-field"
-								value="#{client.adresse}" />
+								value="#{clientbean.adresse}" />
 							<p:outputLabel for="codepostal" value="Code postal:"
 								class="form-field" />
 							<p:inputText id="codepostal" required="true" class="form-field"
-								value="#{client.codePostal}" />
+								value="#{clientbean.codePostal}" />
 							<p:outputLabel for="ville" value="Ville:" class="form-field" />
 							<p:inputText id="ville" required="true" class="form-field"
-								value="#{client.ville}" />
+								value="#{clientbean.ville}" />
 							<p:outputLabel for="telephone" value="Telephone:" class="form-field" />
 							<p:inputText id="telephone" required="true" class="form-field"
-								value="#{client.telephone}" />
+								value="#{clientbean.telephone}" />
 						</h:panelGrid>
-						<h:commandButton action="#{client.creerClient()}"
+						<h:commandButton action="#{clientbean.creerClient()}"
 							value="Valider" />
 
 						<f:phaseListener
