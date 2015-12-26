@@ -3,8 +3,10 @@ package fr.gtm.proxibanquesi.front.mbeans;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -55,16 +57,18 @@ public class AuthentificationBean implements Serializable {
 	}
 	
 	// Authentification method (login-form)
-	public void authentifier() {
+	public String authentifier() {
 		try {
 			conseiller = serv.checkUser(conseiller);
 			listeClients = serv.getListeClients(conseiller);
 			FacesMessage message = new FacesMessage("Authentification réussie.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			return "user-page";
 		} catch (LigneInexistanteException e) {
 			FacesMessage message = new FacesMessage("Authentification échouée. Veuillez réessayer");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
+		return null;
 	}
 
 	

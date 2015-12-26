@@ -9,53 +9,70 @@
 	<f:view>
 		<ui:composition template="template/layout.xhtml">
 			<ui:define name="content">
-				<h:form>
+				<h:form id="menu">
 					<p:menubar>
-
-						<p:menuitem value="Home" url="user-page.xhtml" />
-
+						<p:menuitem value="Home"/>
 						<p:submenu label="Operations courantes">
-							<p:menuitem value="Créer un client" action="client-form" />
+							<p:menuitem value="Créer un client" />
 							<p:menuitem value="Modifer Client" url="#" />
 							<p:menuitem value="Creer un compte" url="#" />
 							<p:menuitem value="Virement" url="#" />
 						</p:submenu>
-
 						<p:menuitem value="Placement" url="user-page" />
-
 						<p:submenu label="Simulation de crédit">
 							<p:menuitem value="Consommation" url="#" />
 							<p:menuitem value="Immobilier" url="#" />
 						</p:submenu>
-
 						<p:menuitem value="Audit" url="#" />
-						<p:menuitem value="#{conseiller.nom}" />
-
 					</p:menubar>
 				</h:form>
 
+				<h:form id="tableClients">
+					<p:dataTable id="listeClients" value="#{authBean.listeClients}"
+						var="client" selectionMode="single"
+						selection="#{clientBean.selectedClient}" rowKey="#{client.id}">
+						<f:facet name="header">
+							<h:outputText value="Vos clients" />
+						</f:facet>
+						<p:column headerText="Identifiant">
+							<h:outputText value="#{client.id}" />
+						</p:column>
+						<p:column headerText="Nom">
+							<h:outputText value="#{client.nom}" />
+						</p:column>
+						<p:column headerText="Prenom">
+							<h:outputText value="#{client.prenom}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton process="listeClients" icon="ui-icon-search"
+								value="Fiche client" update=":tableClients:clientDetail" oncomplete="PF('clientDialog').show()"/>
+						</f:facet>
+					</p:dataTable>
 
+					<p:dialog header="Fiche client" modal="true" widgetVar="clientDialog">
+						<p:outputPanel id="clientDetail">
+							<p:panelGrid columns="2"
+								rendered="#{not empty clientBean.selectedClient}">
+								<h:outputText value="Id:" />
+								<h:outputText value="#{clientBean.selectedClient.id}" />
+								<h:outputText value="Nom:" />
+								<h:outputText value="#{clientBean.selectedClient.nom}" />
+								<h:outputText value="Prenom:" />
+								<h:outputText value="#{clientBean.selectedClient.prenom}" />
+								<h:outputText value="Adresse:" />
+								<h:outputText value="#{clientBean.selectedClient.adresse}" />
+								<h:outputText value="Code Postal:" />
+								<h:outputText value="#{clientBean.selectedClient.codePostal}" />
+								<h:outputText value="Ville:" />
+								<h:outputText value="#{clientBean.selectedClient.ville}" />
+								<h:outputText value="Telephone:" />
+								<h:outputText value="#{clientBean.selectedClient.telephone}" />
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
 
-				<p:dataTable id="listeClients" value="#{conseiller.listeClients}"
-					var="client" selectionMode="single"
-					selection="#{clientbean.client}" rowKey="#{conseiller.idcons}">
-					<f:facet name="header">
-						<h:outputText value="Liste clients" />
-					</f:facet>
-					<p:column headerText="Identifiant">
-						<h:outputText value="#{client.id}" />
-					</p:column>
-					<p:column headerText="Nom">
-						<h:outputText value="#{client.nom}" />
-					</p:column>
-					<p:column headerText="Prenom">
-						<h:outputText value="#{client.prenom}" />
-					</p:column>
-
-
-				</p:dataTable>
-				<h:form id="form">
 					<p:growl id="msgs" showDetail="true" />
+
 				</h:form>
 
 			</ui:define>

@@ -8,6 +8,7 @@
 	<f:loadBundle basename="fr.gtm.proxibanquesi.bundle.messages" var="msg" />
 </h:head>
 <body>
+	<f:phaseListener type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
 	<f:view afterPhase="#{authBean.afterPhase}">
 		<ui:composition template="template/layout.xhtml">
 			<ui:define name="content">
@@ -35,8 +36,7 @@
 									value="Valider">
 									<f:ajax execute="@form" render="@form" />
 								</h:commandButton>
-								<f:phaseListener
-									type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
+
 							</p:panel>
 
 						</h:form>
