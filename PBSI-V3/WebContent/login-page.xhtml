@@ -4,38 +4,44 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<h:head></h:head>
+<h:head>
+	<f:loadBundle basename="fr.gtm.proxibanquesi.bundle.messages" var="msg" />
+</h:head>
 <body>
-	<f:view>
+	<f:view afterPhase="#{authBean.afterPhase}">
 		<ui:composition template="template/layout.xhtml">
 			<ui:define name="content">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-4"></div>
-					<div class="ui-grid-col-4">
+					<div class="ui-grid-col-3"></div>
+					<div class="ui-grid-col-6">
 						<h:form id="login-form">
+
 							<p:panel id="authentification" header="Authentification">
-								<p:message id="message-login" showDetail="true"
-									autoUpdate="true" for="login-form" />
-								<h:panelGrid columns="2" cellpadding="10">
-									<p:outputLabel for="login" value="Identifiant:"
-										class="form-field" />
-									<p:inputText id="login" required="true" class="form-field"
-										value="#{conseiller.login}" />
-									<p:outputLabel for="password" value="Mot de passe:"
-										class="form-field" />
-									<p:password id="password" required="true" class="form-field"
-										value="#{conseiller.mdp}" />
-								</h:panelGrid>
-								<h:commandButton action="#{conseiller.validerLogin()}"
-									value="Valider" />
-								<!-- 								<p:commandButton value="Submit" id="ajax" -->
-								<!-- 									styleClass="ui-priority-primary" -->
-								<!-- 									action="#{conseiller.validerLogin()}" /> -->
-								<f:phaseListener type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
+								<p:messages globalOnly="true" showDetail="true"
+									autoUpdate="true" />
+								<!-- 								<h:panelGrid columns="2" cellpadding="10"> -->
+								<p:outputLabel for="login" value="Identifiant:" />
+								<p:inputText id="login" value="#{authBean.conseiller.login}">
+									<f:ajax event="blur" render="loginMessage" />
+								</p:inputText>
+								<p:message id="loginMessage" for="login" />
+								<p:outputLabel for="password" value="Mot de passe:" />
+								<p:password id="password" value="#{authBean.conseiller.mdp}">
+									<f:ajax event="blur" render="passwordMessage" />
+								</p:password>
+								<p:message id="passwordMessage" for="password" />
+								<!-- 								</h:panelGrid> -->
+								<h:commandButton action="#{authBean.authentifier}"
+									value="Valider">
+									<f:ajax execute="@form" render="@form" />
+								</h:commandButton>
+								<f:phaseListener
+									type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
 							</p:panel>
+
 						</h:form>
 					</div>
-					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-3"></div>
 				</div>
 			</ui:define>
 		</ui:composition>

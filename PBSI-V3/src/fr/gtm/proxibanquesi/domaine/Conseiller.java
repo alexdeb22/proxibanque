@@ -1,5 +1,7 @@
 package fr.gtm.proxibanquesi.domaine;
 
+import javax.validation.constraints.NotNull;
+
 /** Cette classe représente un conseiller d'une agence ProxiBanque.
  * @author Martin Coralie - De Bruyn Alexandre
  *
@@ -16,8 +18,9 @@ public class Conseiller {
 	private int idagence;
 	/** True si le conseiller est également le gérant de l'agence. */
 	private boolean gerant = false;
-	
+	@NotNull(message="Veuillez saisir votre identifiant")
 	private String login;
+	@NotNull(message="Veuillez saisir votre mot de passe")
 	private String mdp;
 
 	// Constructeurs
