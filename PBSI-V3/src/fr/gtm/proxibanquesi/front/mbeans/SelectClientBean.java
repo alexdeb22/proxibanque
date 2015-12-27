@@ -32,7 +32,7 @@ public class SelectClientBean implements Serializable {
 	// Bean lifecycle log
 	@PostConstruct
 	public void creationBean() {
-		System.out.println("Création SelectClientBean");
+		System.out.println("Création SelectClientBean: " + selectedClient);
 	}
 	@PreDestroy
 	public void destructionBean() {

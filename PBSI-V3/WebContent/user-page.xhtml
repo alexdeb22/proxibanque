@@ -11,9 +11,9 @@
 			<ui:define name="content">
 				<h:form id="menu">
 					<p:menubar>
-						<p:menuitem value="Home"/>
+						<p:menuitem value="Home" />
 						<p:submenu label="Operations courantes">
-							<p:menuitem value="Créer un client" action="client-form"/>
+							<p:menuitem value="Créer un client" action="client-form" />
 							<p:menuitem value="Modifer Client" url="#" />
 							<p:menuitem value="Creer un compte" url="#" />
 							<p:menuitem value="Virement" url="#" />
@@ -45,11 +45,15 @@
 						</p:column>
 						<f:facet name="footer">
 							<p:commandButton process="listeClients" icon="ui-icon-search"
-								value="Fiche client" update=":tableClients:clientDetail" oncomplete="PF('clientDialog').show()"/>
+								value="Fiche client" update=":tableClients:clientDetail"
+								oncomplete="PF('clientDialog').show()" />
+							<p:commandButton value="Nouveau compte" icon="ui-icon-plus"
+								oncomplete="PF('newcompteDialog').show()" />
 						</f:facet>
 					</p:dataTable>
 
-					<p:dialog header="Fiche client" modal="true" widgetVar="clientDialog">
+					<p:dialog header="Fiche client" modal="true"
+						widgetVar="clientDialog">
 						<p:outputPanel id="clientDetail">
 							<p:panelGrid columns="2"
 								rendered="#{not empty clientBean.selectedClient}">
@@ -68,6 +72,22 @@
 								<h:outputText value="Telephone:" />
 								<h:outputText value="#{clientBean.selectedClient.telephone}" />
 							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+
+					<p:dialog header="Nouveau compte" modal="true"
+						widgetVar="newcompteDialog">
+						<p:outputPanel id="compteForm">
+							<p:outputLabel for="type" value="Type:" />
+							<p:selectOneRadio id="type" value="#{createCompteBean.type}">
+								<f:selectItem itemLabel="Compte courant" itemValue="courant" />
+								<f:selectItem itemLabel="Compte epargne" itemValue="epargne" />
+							</p:selectOneRadio>
+							<p:panelGrid columns="2">
+								<h:outputText value="Solde:" />
+								<h:outputText value="#{createCompteBean.createdCompte.solde}" />
+							</p:panelGrid>
+							<p:commandButton value="Valider" action="#{createCompteBean.creerCompte()}"/>
 						</p:outputPanel>
 					</p:dialog>
 
