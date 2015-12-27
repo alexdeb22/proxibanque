@@ -18,14 +18,21 @@ import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
 /**
- * @author Alexandre et Coralie 
- * Cette classe est la classe DAO qui contient les méthodes create(Client), read(Client), update(Client), delete(Client) et Client getID(Client).
- *
+ *  
+ * Cette classe est la classe DAO qui contient les méthodes create(Client), read(Client),
+ *  update(Client), delete(Client) et getListeComptesClient(Client client).
+ * @author Alexandre De Bruyn et Clement Peberge
  */
 public class ClientDao implements IClientDao {
 
+	/**
+	 * Méthode de création de client.
+	 * 
+	 * @param cli : le client
+	 * @return le client créé
+	 * @throws LigneExistanteException
+	 */
 	@Override
-
 	public Client create(Client cli) throws LigneExistanteException {
 		try {
 			Connection cnx = BddConnector.connect();
@@ -70,6 +77,13 @@ public class ClientDao implements IClientDao {
 		return cli;
 	}
 
+	/**
+	 * Méthode de lecture des informations du client.
+	 * 
+	 * @param cli : le client
+	 * @return le client consulté
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public Client read(Client cli) throws LigneInexistanteException {
 		try {
@@ -107,6 +121,13 @@ public class ClientDao implements IClientDao {
 		return cli;
 	}
 
+	/**
+	 * Méthode pour modifier les informations du client.
+	 * 
+	 * @param cli : le client
+	 * @return le client mis à jour
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public Client update(Client cli) throws LigneInexistanteException {
 		try {
@@ -144,6 +165,13 @@ public class ClientDao implements IClientDao {
 		return cli;
 	}
 
+	/**
+	 * Méthode pour effacer un client.
+	 * 
+	 * @param cli : le client
+	 * @return res : un int représentant le nombre de lignes supprimée en base de données
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public int delete(Client cli) throws LigneInexistanteException {
 		int res = 0;
@@ -174,6 +202,12 @@ public class ClientDao implements IClientDao {
 		return res;
 	}
 
+	/**
+	 * Méthode qui récupère la liste des comptes d'un client.
+	 * 
+	 * @param client : Le client
+	 * @return La liste de comptes d'un client
+	 */
 	@Override
 	public ArrayList<Compte> getListeComptesClient(Client client) {
 		ArrayList<Compte> listeComptesClient = new ArrayList<Compte>();

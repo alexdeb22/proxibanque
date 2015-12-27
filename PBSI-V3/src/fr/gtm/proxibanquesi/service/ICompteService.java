@@ -10,16 +10,17 @@ import fr.gtm.proxibanquesi.exceptions.SoldeInsuffisantException;
 
 /**
  * Interface de la couche Service du COmpte
- * Elle liste les méthodes de CRUD d'un compte.
- * @author Alexandre et Coralie
+ * Elle liste les méthodes de CRUD d'un compte et la méthode virement.
+ * @author Alexandre De Bruyn et Clement Peberge
  *
  */
 public interface ICompteService {
 	
 	/**
-	 * Méthode pour créer un compte
-	 * @param compte : compte
-	 * @return
+	 * Méthode de création d'un compte.
+	 * 
+	 * @param comt : le compte
+	 * @return Le compte créé
 	 * @throws DaoException 
 	 */
 	public Compte creerCompte(Compte compte) throws DaoException;
@@ -28,8 +29,9 @@ public interface ICompteService {
 	
 	/**
 	 * Méthode pour lire les informations d'un compte.
-	 * @param compte : un compte
-	 * @return
+	 * 
+	 * @param comt : le compte
+	 * @return Le compte consulté
 	 * @throws LigneInexistanteException
 	 */
 	public Compte consulterCompte(Compte compte) throws LigneInexistanteException;
@@ -37,9 +39,9 @@ public interface ICompteService {
 	
 	
 	/**
-	 * Méthode pour modifier le solde d'un compte.
-	 * @param compte : un compte
-	 * @return
+	 * Méthode de modification d'un compte.
+	 * @param compte : compte
+	 * @return Le compte mis à jour
 	 * @throws LigneInexistanteException
 	 */
 	public Compte modifierCompte(Compte compte) throws LigneInexistanteException;
@@ -48,17 +50,18 @@ public interface ICompteService {
 	
 	/**
 	 * Méthode pour supprimer un compte.
-	 * @param compte : un compte
-	 * @return
+	 * 
+	 * @param comt : le compte
+	 * @return res : un int représentant le nombre de lignes supprimée en base de données
 	 * @throws LigneInexistanteException
 	 */
 	public int supprimerCompte(Compte compte) throws LigneInexistanteException;
 	
 	/**
 	 * Méthode de virement d'un compte vers un autre compte.
-	 * @param compteDebiteur : compte
-	 * @param compteCrediteur : compte
-	 * @param montant
+	 * @param compteDebiteur : compte à débiter
+	 * @param compteCrediteur : compte à créditer
+	 * @param double montant : montant du virement
 	 * @return
 	 * @throws SoldeInsuffisantException
 	 * @throws LigneInexistanteException
@@ -68,7 +71,12 @@ public interface ICompteService {
 
 
 
-
+	/**
+	 * Méthode qui récupère la liste des comptes des clients d'un conseiller.
+	 * 
+	 * @param cons : Le conseiller en session
+	 * @return La liste de tous les comptes des clients d'un conseiller
+	 */
 	public ArrayList<Compte> getListeComptes(Conseiller cons);
 
 

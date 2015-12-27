@@ -21,13 +21,20 @@ import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
  * Cette classe implémentent les méthodes de CRUD pour la table Compte de la
  * base de données.
  * 
- * @author Alexandre et Coralie
+ * @author Alexandre De Bruyn et Clement Peberge
  *
  */
 public class CompteDao implements ICompteDao {
 
 
 
+	/**
+	 * Méthode de création d'un compte.
+	 * 
+	 * @param comt : le compte
+	 * @return Le compte créé
+	 * @throws DaoException 
+	 */
 	@Override
 	public Compte createCompte(Compte comt) throws DaoException {
 		try {
@@ -68,6 +75,13 @@ public class CompteDao implements ICompteDao {
 	}
 	
 
+	/**
+	 * Méthode pour lire les informations d'un compte.
+	 * 
+	 * @param comt : le compte
+	 * @return Le compte consulté
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public Compte readCompte(Compte comt) throws LigneInexistanteException {
 		// TODO Auto-generated method stub
@@ -107,6 +121,13 @@ public class CompteDao implements ICompteDao {
 		return comt;
 	}
 	
+	/**
+	 * Méthode pour supprimer un compte.
+	 * 
+	 * @param comt : le compte
+	 * @return res : un int représentant le nombre de lignes supprimée en base de données
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public int delete(Compte comt) throws LigneInexistanteException {
 		int res = 0;
@@ -137,6 +158,12 @@ public class CompteDao implements ICompteDao {
 		return res;
 	}
 
+	/**
+	 * Méthode qui récupère la liste des comptes des clients d'un conseiller.
+	 * 
+	 * @param cons : Le conseiller en session
+	 * @return La liste de tous les comptes des clients d'un conseiller
+	 */
 	@Override
 	public ArrayList<Compte> getListeComptes(Conseiller cons) {
 		ArrayList<Compte> listeComptes = new ArrayList<Compte>();
@@ -170,7 +197,12 @@ public class CompteDao implements ICompteDao {
 	}
 
 
-	
+	/**
+	 * Méthode de modification d'un compte.
+	 * @param compte : compte
+	 * @return Le compte mis à jour
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public Compte updateCompte(Compte comt) throws LigneInexistanteException {
 		try {

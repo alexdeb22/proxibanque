@@ -119,6 +119,7 @@ public class AuthentificationBean implements Serializable {
 	 * @return La propriété listeClients
 	 */
 	public ArrayList<Client> getListeClients() {
+		listeClients = serv.getListeClients(conseiller);
 		return listeClients;
 	}
 	// public void setListeClients(ArrayList<Client> listeClients) {

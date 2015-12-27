@@ -21,11 +21,17 @@ import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 /** Cette classe implémentent les méthodes de CRUD pour la table 
  * CONSEILLER de la base de données.
  * 
- * @author Alexandre De Bruyn
+ * @author Alexandre De Bruyn et Clement Peberge
  *
  */
 public class ConseillerDao implements IConseillerDao {
 
+	/**
+	 * Méthode de création un conseiller.
+	 * @param cons qui est le conseiller.
+	 * @return Le conseiller créé
+	 * @throws LigneExistanteException
+	 */
 	@Override
 	public Conseiller create(Conseiller cons) throws LigneExistanteException {
 		try {
@@ -71,6 +77,12 @@ public class ConseillerDao implements IConseillerDao {
 		return cons;
 	}
 
+	/**
+	 * Méthode pour lire les informations d'un conseiller.
+	 * @param cons qui est le conseiller (doit avoir un login et un mdp).
+	 * @return Le conseiller consulté
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public Conseiller read(Conseiller cons) throws LigneInexistanteException {
 		try {
@@ -107,6 +119,12 @@ public class ConseillerDao implements IConseillerDao {
 		return cons;
 	}
 
+	/**
+	 * Méthode pour modifier les informations d'un conseiller.
+	 * @param cons qui est le conseiller.
+	 * @return Le conseiller mis à jour
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public Conseiller update(Conseiller cons) throws LigneInexistanteException {
 		try {
@@ -140,6 +158,12 @@ public class ConseillerDao implements IConseillerDao {
 		return cons;
 	}
 	
+	/**
+	 * Méthode pour supprimer un conseiller.
+	 * @param cons qui est le conseiller.
+	 * @return res : un int représentant le nombre de lignes supprimée en base de données
+	 * @throws LigneInexistanteException
+	 */
 	@Override
 	public int delete(Conseiller cons) throws LigneInexistanteException {
 		int res = 0;
@@ -171,7 +195,11 @@ public class ConseillerDao implements IConseillerDao {
 	}
 
 
-	
+	/**
+	 * Méthode pour récupérer la liste des clients et leurs comptes d'un conseiller.
+	 * @param cons qui est le conseiller.
+	 * @return La liste de clients et de comptes du conseiller
+	 */
 	@Override
 	public ArrayList<Client> getListeClients(Conseiller cons) {
 		ArrayList<Client> listeClients = new ArrayList<Client>();
