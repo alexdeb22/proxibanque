@@ -18,7 +18,7 @@ public class ClientService implements IClientService {
 	IClientDao dao;
 	
 	@Override
-	public Client createClient(Client cli) throws LigneExistanteException, LigneInexistanteException {
+	public Client createClient(Client cli) throws LigneExistanteException {
 		return dao.create(cli);
 	}
 

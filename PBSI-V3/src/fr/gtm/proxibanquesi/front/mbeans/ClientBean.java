@@ -129,10 +129,6 @@ public class ClientBean implements Serializable {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur",
 					"Ce client existe déja.");
 			FacesContext.getCurrentInstance().addMessage("creerclient-form", message);
-		} catch (LigneInexistanteException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur",
-					"Un problème est survenu.");
-			FacesContext.getCurrentInstance().addMessage("creerclient-form", message);
 		}
 	}
 	

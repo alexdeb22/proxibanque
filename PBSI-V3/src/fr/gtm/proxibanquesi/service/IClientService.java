@@ -19,9 +19,8 @@ public interface IClientService {
 	 * @param cli : le client
 	 * @return
 	 * @throws LigneExistanteException
-	 * @throws LigneInexistanteException
 	 */
-	public Client createClient(Client cli) throws LigneExistanteException, LigneInexistanteException;
+	public Client createClient(Client cli) throws LigneExistanteException;
 	
 	/**
 	 * Méthode pour lire les informations d'un client.

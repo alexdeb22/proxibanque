@@ -7,31 +7,27 @@
 <h:head></h:head>
 <body>
 	<f:view>
+		<f:phaseListener type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
 		<ui:composition template="template/layout.xhtml">
 			<ui:define name="content">
 				<h:form>
 					<p:menubar>
-
 						<p:menuitem value="Home" url="user-page.xhtml" />
-
 						<p:submenu label="Operations courantes">
-							<p:menuitem value="Créer un client" url="client-form.xhtml" />
+							<p:menuitem value="Créer un client" action="client-form" />
 							<p:menuitem value="Modifer Client" url="#" />
 							<p:menuitem value="Creer un compte" url="#" />
 							<p:menuitem value="Virement" url="#" />
 						</p:submenu>
-
 						<p:menuitem value="Placement" url="user-page" />
-
 						<p:submenu label="Simulation de crédit">
 							<p:menuitem value="Consommation" url="#" />
 							<p:menuitem value="Immobilier" url="#" />
 						</p:submenu>
-
 						<p:menuitem value="Audit" url="#" />
-
 					</p:menubar>
 				</h:form>
+				
 				<h:form id="creerclient-form">
 					<p:panel id="creationClient" header="Nouveau client">
 						<p:message id="message-create-client" showDetail="true"
@@ -39,29 +35,28 @@
 						<h:panelGrid columns="2" cellpadding="10">
 							<p:outputLabel for="nom" value="Nom:" class="form-field" />
 							<p:inputText id="nom" required="true" class="form-field"
-								value="#{clientbean.nom}" />
+								value="#{creationClient.createdClient.nom}" />
 							<p:outputLabel for="prenom" value="Prenom:" class="form-field" />
 							<p:inputText id="prenom" required="true" class="form-field"
-								value="#{clientbean.prenom}" />
+								value="#{creationClient.createdClient.prenom}" />
 							<p:outputLabel for="adresse" value="Adresse:" class="form-field" />
 							<p:inputText id="adresse" required="true" class="form-field"
-								value="#{clientbean.adresse}" />
+								value="#{creationClient.createdClient.adresse}" />
 							<p:outputLabel for="codepostal" value="Code postal:"
 								class="form-field" />
 							<p:inputText id="codepostal" required="true" class="form-field"
-								value="#{clientbean.codePostal}" />
+								value="#{creationClient.createdClient.codePostal}" />
 							<p:outputLabel for="ville" value="Ville:" class="form-field" />
 							<p:inputText id="ville" required="true" class="form-field"
-								value="#{clientbean.ville}" />
-							<p:outputLabel for="telephone" value="Telephone:" class="form-field" />
+								value="#{creationClient.createdClient.ville}" />
+							<p:outputLabel for="telephone" value="Telephone:"
+								class="form-field" />
 							<p:inputText id="telephone" required="true" class="form-field"
-								value="#{clientbean.telephone}" />
+								value="#{creationClient.createdClient.telephone}" />
 						</h:panelGrid>
-						<h:commandButton action="#{clientbean.creerClient()}"
+						<h:commandButton action="#{creationClient.creerClient}"
 							value="Valider" />
-
-						<f:phaseListener
-							type="fr.gtm.proxibanquesi.front.mbeans.DebugPhase" />
+						<p:messages/>
 					</p:panel>
 				</h:form>
 			</ui:define>
