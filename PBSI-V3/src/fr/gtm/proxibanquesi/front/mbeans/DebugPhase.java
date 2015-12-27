@@ -4,10 +4,14 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
+/** Phase listener utilisé pour suivre les différentes phases du traitement de requêtes JSF.
+ * @author Alex
+ *
+ */
 public class DebugPhase implements PhaseListener {
 
 	/**
-	 * 
+	 * Serial ID.
 	 */
 	private static final long serialVersionUID = 1L;
 
