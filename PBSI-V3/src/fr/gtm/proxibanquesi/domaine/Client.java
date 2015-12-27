@@ -1,5 +1,7 @@
 package fr.gtm.proxibanquesi.domaine;
 
+import java.util.ArrayList;
+
 /** Classe représentant un client de la banque.
  * Toutes les informations personnelles hormis le numéro d'identification sont de type String.
  * @author Martin Coralie - De Bruyn Alexandre
@@ -16,6 +18,7 @@ public class Client {
 	/** Numéro d'identification du client */
 	private int id;
 	private int cons;
+	private ArrayList<Compte> listeComptes;
 //	/** Liste des placements effectués pour ce client */
 //	private ArrayList<Placement> patrimoine;
 
@@ -102,6 +105,14 @@ public class Client {
 		this.cons = cons;
 	}
 
+
+	public ArrayList<Compte> getListeComptes() {
+		return listeComptes;
+	}
+
+	public void setListeComptes(ArrayList<Compte> listeComptes) {
+		this.listeComptes = listeComptes;
+	}
 
 	// Affichage
 	@Override

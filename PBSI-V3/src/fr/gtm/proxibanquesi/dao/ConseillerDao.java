@@ -11,6 +11,9 @@ import java.util.logging.Logger;
 
 import fr.gtm.proxibanquesi.dao.util.BddConnector;
 import fr.gtm.proxibanquesi.domaine.Client;
+import fr.gtm.proxibanquesi.domaine.Compte;
+import fr.gtm.proxibanquesi.domaine.CompteCourant;
+import fr.gtm.proxibanquesi.domaine.CompteEpargne;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
 import fr.gtm.proxibanquesi.exceptions.LigneExistanteException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
@@ -172,6 +175,8 @@ public class ConseillerDao implements IConseillerDao {
 	@Override
 	public ArrayList<Client> getListeClients(Conseiller cons) {
 		ArrayList<Client> listeClients = new ArrayList<Client>();
+		
+		Compte coTemp = null;
 		try {
 			Connection cnx = BddConnector.connect();
 
@@ -191,7 +196,30 @@ public class ConseillerDao implements IConseillerDao {
 				cTemp.setCons(cons.getIdcons());
 				listeClients.add(cTemp);
 			}
-
+			
+			for (Client c : listeClients) {
+			ArrayList<Compte> listeComptes = new ArrayList<Compte>();
+			String sql2 = "select * from compte where idclient = ?";
+			PreparedStatement stat2 = cnx.prepareStatement(sql2);
+			stat2.setInt(1, c.getId());
+			ResultSet res2 = stat2.executeQuery();
+			while(res2.next()) {
+				if (res2.getString("type").equals("Courant")) {
+					coTemp = new CompteCourant();
+					((CompteCourant) coTemp).setAutorisationDecouvert(res2.getDouble("autodecouvert"));
+				} else if (res2.getString("type").equals("Epargne")) {
+					coTemp = new CompteEpargne();
+					((CompteEpargne) coTemp).setTauxRemuneration(res2.getDouble("taux"));
+				}
+				coTemp.setIdcli(res2.getInt("idclient"));
+				coTemp.setNumCompte(res2.getInt("numCompte"));
+				coTemp.setSolde(res2.getDouble("solde"));
+				coTemp.setDateOuverture(res2.getDate("dateOuverture"));
+				listeComptes.add(coTemp);
+			}
+			c.setListeComptes(listeComptes);
+			}
+			
 		} catch (SQLException ex) {
 			Logger.getLogger(ClientDao.class.getName()).log(Level.SEVERE, null, ex);
 		}

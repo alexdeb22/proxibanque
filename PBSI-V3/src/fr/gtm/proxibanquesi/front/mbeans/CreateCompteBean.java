@@ -4,14 +4,17 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.CompteCourant;
 import fr.gtm.proxibanquesi.domaine.CompteEpargne;
+import fr.gtm.proxibanquesi.exceptions.DaoException;
 import fr.gtm.proxibanquesi.service.ICompteService;
 
 @ManagedBean(name = "createCompteBean")
@@ -53,15 +56,20 @@ public class CreateCompteBean implements Serializable {
 
 	// Creation du compte
 	public void creerCompte() {
-		
+		try {
 		createdCompte.setIdcli(idclient);
-		if(type.equals("courant")) serv.creerCompte( (CompteCourant) createdCompte);
-		// Tres moche....
+		if(type.equals("courant"))
+			
+				serv.creerCompte( (CompteCourant) createdCompte);
+			
 		else if(type.equals("epargne")) {
 			CompteEpargne epargne = new CompteEpargne();
 			epargne.setIdcli(idclient);
 			epargne.setSolde(createdCompte.getSolde());
 			serv.creerCompte( epargne);
+		}} catch (DaoException e) {
+			FacesMessage message = new FacesMessage("Problème lors de la création");
+			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
 

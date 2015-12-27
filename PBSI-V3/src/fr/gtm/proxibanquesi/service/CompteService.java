@@ -10,6 +10,7 @@ import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.CompteCourant;
 import fr.gtm.proxibanquesi.domaine.CompteEpargne;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
+import fr.gtm.proxibanquesi.exceptions.DaoException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 import fr.gtm.proxibanquesi.exceptions.SoldeInsuffisantException;
 
@@ -20,7 +21,7 @@ public class CompteService implements ICompteService {
 	ICompteDao dao;
 
 	@Override
-	public Compte creerCompte(Compte compte) {
+	public Compte creerCompte(Compte compte) throws DaoException {
 		return dao.createCompte(compte);
 	}
 

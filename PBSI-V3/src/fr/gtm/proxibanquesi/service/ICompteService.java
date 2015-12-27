@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
+import fr.gtm.proxibanquesi.exceptions.DaoException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 import fr.gtm.proxibanquesi.exceptions.SoldeInsuffisantException;
 
@@ -19,8 +20,9 @@ public interface ICompteService {
 	 * Méthode pour créer un compte
 	 * @param compte : compte
 	 * @return
+	 * @throws DaoException 
 	 */
-	public Compte creerCompte(Compte compte);
+	public Compte creerCompte(Compte compte) throws DaoException;
 	
 	
 	

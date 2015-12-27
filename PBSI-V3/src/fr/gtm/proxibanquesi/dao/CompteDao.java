@@ -14,6 +14,7 @@ import fr.gtm.proxibanquesi.domaine.Compte;
 import fr.gtm.proxibanquesi.domaine.CompteCourant;
 import fr.gtm.proxibanquesi.domaine.CompteEpargne;
 import fr.gtm.proxibanquesi.domaine.Conseiller;
+import fr.gtm.proxibanquesi.exceptions.DaoException;
 import fr.gtm.proxibanquesi.exceptions.LigneInexistanteException;
 
 /**
@@ -28,7 +29,7 @@ public class CompteDao implements ICompteDao {
 
 
 	@Override
-	public Compte createCompte(Compte comt) {
+	public Compte createCompte(Compte comt) throws DaoException {
 		try {
 			Connection cnx = BddConnector.connect();
 
@@ -60,6 +61,7 @@ public class CompteDao implements ICompteDao {
 			BddConnector.unconnect(cnx);
 		} catch (SQLException ex) {
 			Logger.getLogger(CompteDao.class.getName()).log(Level.SEVERE, null, ex);
+			throw new DaoException();
 		}
 
 		return comt;
