@@ -57,17 +57,20 @@ public class CreateCompteBean implements Serializable {
 	// Creation du compte
 	public void creerCompte() {
 		try {
-		createdCompte.setIdcli(idclient);
-		if(type.equals("courant"))
-			
-				serv.creerCompte( (CompteCourant) createdCompte);
-			
-		else if(type.equals("epargne")) {
-			CompteEpargne epargne = new CompteEpargne();
-			epargne.setIdcli(idclient);
-			epargne.setSolde(createdCompte.getSolde());
-			serv.creerCompte( epargne);
-		}} catch (DaoException e) {
+			createdCompte.setIdcli(idclient);
+			if (type.equals("courant")) {
+				serv.creerCompte((CompteCourant) createdCompte);
+				FacesMessage message = new FacesMessage("Compte courant créé avec succès");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			} else if (type.equals("epargne")) {
+				CompteEpargne epargne = new CompteEpargne();
+				epargne.setIdcli(idclient);
+				epargne.setSolde(createdCompte.getSolde());
+				serv.creerCompte(epargne);
+				FacesMessage message = new FacesMessage("Compte épargne créé avec succès");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			}
+		} catch (DaoException e) {
 			FacesMessage message = new FacesMessage("Problème lors de la création");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
