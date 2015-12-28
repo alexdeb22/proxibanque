@@ -64,7 +64,7 @@ public class CompteEpargne extends Compte {
 	 */
 	@Override
 	public String toString() {
-		return "CompteEpargne [numCompte=]" + getNumCompte() + ", solde=" + getSolde() + "]";
+		return "Epargne";
 	}
 
 }

@@ -66,8 +66,7 @@ public class CompteCourant extends Compte {
 	 */
 	@Override
 	public String toString() {
-		return "CompteCourant [numcompte=" + this.getNumCompte() + ", autorisationDecouvert=" + autorisationDecouvert
-				+ ", solde=" + getSolde() + "]";
+		return "Courant";
 	}
 
 }

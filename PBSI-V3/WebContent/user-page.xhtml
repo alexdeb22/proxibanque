@@ -90,6 +90,9 @@
 								<p:column headerText="Solde">
 									<h:outputText value="#{compte.solde}" />
 								</p:column>
+								<p:column headerText="Type de compte">
+									<h:outputText value="#{compte.toString()}" />
+								</p:column>
 							</p:dataTable>
 						</p:rowExpansion>
 
